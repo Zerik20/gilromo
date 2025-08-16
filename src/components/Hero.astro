@@ -1,0 +1,319 @@
+---
+export interface Speaker { name: string; image: string; keynote?: boolean }
+export interface Props {
+  titleMain?: string; titleEmph?: string; tagline?: string;
+  dateParts?: string[]; city?: string; keynoteName?: string;
+  speakers?: Speaker[]; cta?: { text: string; href: string } | null;
+}
+
+const {
+  titleMain = 'CUMBRE',
+  titleEmph = 'SINERGÉTICA',
+  tagline = '¡Juntos hagamos eco! ECO ECO ECO',
+  dateParts = ['SÁBADO','15','NOVIEMBRE'],
+  city = 'Mérida, Yucatán',
+  keynoteName = 'JORGE SERRATOS',
+  cta = { text: 'Boletos', href: '#boletos' },
+  speakers = [
+    { name:'MARIO ELSNER',   image:'/img/ponentes/Ponente1.png' },
+    { name:'LUIS ARREDONDO', image:'/img/ponentes/Ponente2.png' },
+    { name:'GIL ROMO',       image:'/img/ponentes/Ponente3.png' },
+    { name:'JORGE SERRATOS', image:'/img/ponentes/Ponente4.png', keynote:true },
+    { name:'ÁNGEL PINTO',    image:'/img/ponentes/Ponente5.png' },
+    { name:'MIGUEL GÁMEZ',   image:'/img/ponentes/Ponente6.png' },
+    { name:'OSWALDO BRAVO',  image:'/img/ponentes/Ponente7.png' },
+  ],
+} = Astro.props;
+
+const arr = [...speakers];
+const ki = arr.findIndex(s => s.keynote || s.name.toUpperCase() === (keynoteName||'').toUpperCase());
+if (ki > -1) { const k = arr.splice(ki,1)[0]; arr.splice(Math.floor(speakers.length/2),0,k) }
+const ordered   = arr;
+const centerIdx = Math.floor(ordered.length/2);
+
+const H_SIDE   = 'h-[clamp(16rem,36svh,30rem)] md:h-[clamp(18rem,40svh,34rem)] xl:h-[clamp(20rem,44svh,38rem)]';
+const H_CENTER = 'h-[clamp(22rem,46svh,38rem)] md:h-[clamp(24rem,50svh,42rem)] xl:h-[clamp(26rem,54svh,46rem)]';
+const heights  = [H_SIDE,H_SIDE,H_SIDE,H_CENTER,H_SIDE,H_SIDE,H_SIDE];
+const zLayers  = ['z-[6]','z-[12]','z-[16]','z-[28]','z-[16]','z-[12]','z-[6]'];
+const yOffsets = [
+  'translate-y-2 md:translate-y-4 lg:translate-y-6',
+  'translate-y-6 md:translate-y-8 lg:translate-y-12',
+  'translate-y-9 md:translate-y-11 lg:translate-y-15',
+  'translate-y-13 md:translate-y-15 lg:translate-y-19',
+  'translate-y-9 md:translate-y-11 lg:translate-y-15',
+  'translate-y-6 md:translate-y-8 lg:translate-y-12',
+  'translate-y-2 md:translate-y-4 lg:translate-y-6',
+];
+
+function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.pop()||''; return [p.join(' ').toUpperCase(), last.toUpperCase()] }
+---
+
+<!-- Sección transparente; el fondo rojo viene del layout -->
+<section class="relative min-h-[88svh] bg-transparent overflow-x-clip overflow-y-visible pt-16 sm:pt-20">
+
+  <!-- Fondo SVG con degradado a transparente -->
+  <div aria-hidden="true" class="absolute inset-0 z-0 hero-bg-svg"></div>
+
+  <!-- Contenido en z-10 para quedar encima del fondo -->
+  <div class="relative z-10 mx-auto w-full max-w-[1320px] px-3 sm:px-6 lg:px-8">
+    <header class="text-center max-w-4xl mx-auto">
+      <h1 class="font-['Playfair_Display'] text-white font-semibold leading-[0.92] text-[clamp(2rem,5vw,4rem)]">
+        {titleMain}
+        <span class="block mt-1 font-extrabold tracking-[.12em] uppercase text-[clamp(2rem,7vw,5rem)]
+                     text-transparent bg-clip-text bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_50%,#7f1d1d_100%)]">
+          {titleEmph}
+        </span>
+      </h1>
+      <p class="mt-0 text-white/85 text-[clamp(.9rem,1.6vw,1.05rem)]">{tagline}</p>
+    </header>
+
+    <div class="relative mt-2 sm:-mt-14 lg:-mt-18 xl:-mt-24 pb-20 sm:pb-36">
+      <!-- ESCRITORIO -->
+      <div class="hidden sm:block">
+        <div class="relative mx-auto max-w-[1320px]">
+          <div class="flex items-end justify-center">
+            {ordered.map((s,i)=>{
+              const [first,last] = splitTwoLines(s.name);
+              const isCenter = i === centerIdx;
+              const captionLift = isCenter ? '-translate-y-9 sm:-translate-y-11' : '-translate-y-8 sm:-translate-y-10';
+              return (
+                <figure class={`relative ${zLayers[i]||'z-[8]'} ${yOffsets[i]||''} ${i===0?'':'-ml-12 md:-ml-20 lg:-ml-28 xl:-ml-32'} group`}>
+                  <img src={s.image} alt={`Foto de ${s.name}`}
+                       class={`w-auto object-contain select-none drop-shadow-[0_28px_70px_rgba(0,0,0,.65)]
+                               ${heights[i]||H_SIDE} transition-transform duration-300 ease-out group-hover:-translate-y-1`}
+                       loading={i>1?'lazy':'eager'} decoding="async" />
+                  <figcaption class={`mt-0 ${captionLift} text-center leading-[1.0]`}>
+                    <div class={`font-extrabold uppercase tracking-wide
+                                ${isCenter
+                                  ? 'text-[clamp(1.05rem,2vw,1.35rem)] text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]'
+                                  : 'text-white text-[clamp(.84rem,1.5vw,1.05rem)]'}`}>{first}</div>
+                    {last && (
+                      <div class={`font-extrabold uppercase tracking-wide
+                                  ${isCenter
+                                    ? 'text-[clamp(1.05rem,2vw,1.35rem)] text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]'
+                                    : 'text-white text-[clamp(.84rem,1.5vw,1.05rem)]'}`}>{last}</div>
+                    )}
+                  </figcaption>
+                </figure>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓVIL (anti-recorte) -->
+      <div class="sm:hidden -mx-3 px-3">
+        <div id="heroMobile" data-start={centerIdx}
+             class="relative h-[66svh] max-h-[580px] overflow-visible pt-safe">
+          {ordered.map((s, i) => {
+            const [first, last] = splitTwoLines(s.name);
+            const isCenter = i === centerIdx;
+            return (
+              <figure data-idx={i}
+                class="absolute inset-0 flex items-center justify-center opacity-0 contain-[layout_paint_style_size]"
+                style="--extraY:0px; transition: transform 420ms cubic-bezier(.2,.7,.2,1), opacity 240ms ease, filter 420ms cubic-bezier(.2,.7,.2,1); will-change: transform, opacity, filter; transform-origin: center bottom; backface-visibility: hidden;">
+                <img src={s.image} alt={`Foto de ${s.name}`}
+                     class="max-h-[min(64svh,580px)] w-auto object-contain select-none sm:drop-shadow-[0_22px_46px_rgba(0,0,0,.58)]"
+                     loading={i>1 ? 'lazy' : 'eager'} decoding="async" />
+                <figcaption class="pointer-events-none absolute left-1/2 -translate-x-1/2 z-10" style="bottom:8%;">
+                  <div class={`text-center leading-none font-extrabold uppercase tracking-wide
+                               ${isCenter ? 'text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]' : 'text-white'}
+                               text-[clamp(1.05rem,6vw,1.45rem)]`}
+                       style={isCenter ? '' : 'text-shadow:0 1px 3px rgba(0,0,0,.45);'}>{first}</div>
+                  {last && (
+                    <div class={`text-center leading-none font-extrabold uppercase tracking-wide
+                                 ${isCenter ? 'text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]' : 'text-white'}
+                                 text-[clamp(1.05rem,6vw,1.45rem)]`}
+                         style={isCenter ? '' : 'text-shadow:0 1px 3px rgba(0,0,0,.45);'}>{last}</div>
+                  )}
+                </figcaption>
+              </figure>
+            )
+          })}
+        </div>
+      </div>
+
+      <!-- Fecha + CTA -->
+      <div class="absolute inset-x-0 bottom-2 flex flex-col items-center gap-2">
+        <div class="rounded-full border border-primary-600/80 bg-black/60 px-4 py-1.5">
+          <div class="flex items-center justify-center flex-wrap gap-y-1">
+            {dateParts.map((p) => (
+              <span class="px-0.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white
+                           before:content-['•'] before:mx-2 before:text-primary-300/90 first:before:content-['']">{p}</span>
+            ))}
+            <span class="px-0.5 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white
+                         before:content-['•'] before:mx-2 before:text-primary-300/90">{city}</span>
+          </div>
+        </div>
+        {cta && (
+          <a href={cta.href}
+             class="inline-flex items-center justify-center rounded-full
+                    bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                    text-black font-extrabold uppercase tracking-wide
+                    px-5 py-2.5 text-base sm:text-lg ring-2 ring-gold-300
+                    hover:scale-[1.03] active:scale-[0.98] transition-transform">
+            {cta.text}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  const mm = window.matchMedia('(max-width: 639px)');
+  const track = document.getElementById('heroMobile');
+
+  function start() {
+    if (!track || !mm.matches) return;
+
+    const slides = Array.from(track.querySelectorAll('[data-idx]'));
+    const N = slides.length;
+    if (!N) return;
+
+    const CENTER_SCALE = 2.0;
+    const SIDE_SCALE   = 0.78;
+    const OFFSET_VW    = 34;
+    const BASE_TOP     = 64;
+    const BASE_TY      = -48;
+
+    let idx = Number(track.dataset.start || 0) % N;
+
+    // píxeles seguros por notch/estatus-bar
+    const SAFE_TOP = (() => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--safe-top').trim();
+      // v suele traer 'XXpx'; parseFloat lo convierte a número
+      return v ? parseFloat(v) : 0;
+    })();
+
+    // mide si la parte superior queda fuera y devuelve los px necesarios para bajarla
+    function ensureTopVisible(el) {
+      const rect = el.getBoundingClientRect();
+      const container = track.getBoundingClientRect();
+      const margin = 12 + SAFE_TOP; // margen + área segura
+      const diff = (container.top + margin) - rect.top;
+      return diff > 0 ? diff : 0;
+    }
+
+    function setSlide(el, cap, {pos, blur, bright, z, showCap}) {
+      el.style.left = '50%';
+      const offsetX = pos === 'left'
+        ? `translateX(-${OFFSET_VW}vw)`
+        : pos === 'right'
+          ? `translateX(${OFFSET_VW}vw)`
+          : 'translateX(0)';
+      const scale = pos === 'center' ? CENTER_SCALE : SIDE_SCALE;
+
+      el.style.top  = BASE_TOP + '%';
+
+      // Transform base para medir
+      const pre = `translate(-50%, ${BASE_TY}%) ${offsetX}`;
+      el.style.transform = `${pre} scale(${scale}) translateZ(0)`;
+
+      // Corrección anti-recorte superior
+      const extra = ensureTopVisible(el);
+      el.style.setProperty('--extraY', extra > 0 ? `${extra}px` : '0px');
+
+      // Transform final: translateY DESPUÉS del scale (para que el ajuste no se escale)
+      el.style.transform = `${pre} translateY(var(--extraY)) scale(${scale}) translateZ(0)`;
+
+      el.style.filter = `blur(${blur}px) brightness(${bright})`;
+      el.style.zIndex = String(z);
+
+      if (cap) {
+        cap.style.opacity = showCap ? '1' : '0';
+        cap.style.bottom = '8%';
+      }
+    }
+
+    function render() {
+      for (let i = 0; i < N; i++) {
+        const el  = slides[i];
+        const cap = el.querySelector('figcaption');
+        let d = (i - idx + N) % N;
+        if (d > N / 2) d -= N;
+
+        const visible = Math.abs(d) <= 1;
+        el.style.opacity = visible ? '1' : '0';
+        el.style.pointerEvents = visible ? 'auto' : 'none';
+        el.style.position = 'absolute';
+        el.style.transformOrigin = 'center bottom';
+        el.style.backfaceVisibility = 'hidden';
+
+        if (d === 0) {
+          setSlide(el, cap, { pos:'center', blur:0, bright:1.0, z:60, showCap:true });
+        } else if (d === -1) {
+          setSlide(el, cap, { pos:'left',  blur:2, bright:0.9, z:25, showCap:false });
+        } else if (d === 1) {
+          setSlide(el, cap, { pos:'right', blur:2, bright:0.9, z:25, showCap:false });
+        } else {
+          el.style.top = BASE_TOP + '%';
+          el.style.transform = `translate(-50%, ${BASE_TY}%) translateY(0) scale(${SIDE_SCALE}) translateZ(0)`;
+          el.style.filter = `blur(6px) brightness(0.7)`;
+          el.style.zIndex = '0';
+          if (cap) cap.style.opacity = '0';
+          el.style.opacity = '0';
+        }
+      }
+    }
+
+    let timer = setInterval(() => { idx = (idx + 1) % N; render(); }, 3000);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { clearInterval(timer); }
+      else { clearInterval(timer); timer = setInterval(() => { idx = (idx + 1) % N; render(); }, 3000); }
+    });
+
+    const onChange = (e) => { if (e.matches) render(); };
+    if (mm.addEventListener) mm.addEventListener('change', onChange);
+    else if (mm.addListener) mm.addListener(onChange);
+
+    render();
+    window.addEventListener('resize', render, { passive: true });
+  }
+  start();
+</script>
+
+<style>
+/* Área segura (iOS notch / barras) */
+:root { --safe-top: env(safe-area-inset-top, 0px); }
+.pt-safe { padding-top: var(--safe-top); }
+
+/* Fallback iOS viejo */
+@supports (padding-top: constant(safe-area-inset-top)) {
+  :root { --safe-top: constant(safe-area-inset-top, 0px); }
+}
+
+/* Capa SVG con degradado a transparente */
+.hero-bg-svg{
+  background-image: url('/img/FondoHero.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: .14; /* ajusta entre .08 y .20 */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.90) 0%,
+    rgba(0,0,0,.55) 30%,
+    rgba(0,0,0,.28) 48%,
+    rgba(0,0,0,.10) 62%,
+    rgba(0,0,0,0)   75%,
+    rgba(0,0,0,0) 100%
+  );
+          mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.90) 0%,
+    rgba(0,0,0,.55) 30%,
+    rgba(0,0,0,.28) 48%,
+    rgba(0,0,0,.10) 62%,
+    rgba(0,0,0,0)   75%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;   mask-size: 100% 100%;
+}
+
+/* Fallback si no hay soporte de mask-image */
+@supports not (mask-image: linear-gradient(black, transparent)) {
+  .hero-bg-svg{ clip-path: inset(0 0 35% 0); }
+}
+</style>

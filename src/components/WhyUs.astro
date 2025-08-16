@@ -1,0 +1,109 @@
+---
+import VideoEmbed from './VideoEmbed.astro'
+
+export interface Props {
+  eyebrow?: string
+  title?: string
+  lead?: string
+  points?: { emoji: string; title: string; body: string }[]
+  cta?: { text: string; href: string } | null
+}
+
+const {
+  eyebrow = '¿Por qué nosotros?',
+  title = 'Relaciones reales. Resultados reales.',
+  lead = 'En un solo día aprenderás a vender más, liderar con impacto, potenciar tu marca y crear conexiones que abren oportunidades reales.',
+  points = [
+    { emoji: '🤝', title: 'Conexiones que sí suman', body: '¿Sientes que no generas las relaciones adecuadas en tu ciudad? Aquí conocerás gente que impulsa tu negocio.' },
+    { emoji: '🚀', title: 'Ventas & crecimiento',      body: 'Frameworks accionables para elevar tu ticket promedio y cerrar con seguridad.' },
+    { emoji: '🏷️', title: 'Marca personal con impacto', body: 'Aprende a posicionarte como referente en tu mercado inmobiliario.' },
+    { emoji: '🎯', title: 'Liderazgo que mueve',        body: 'Herramientas simples para dirigir equipos que ejecutan y cumplen objetivos.' },
+  ],
+  cta = { text: 'Aparta tu lugar', href: '#boletos' },
+} = Astro.props;
+---
+
+<section class="relative section py-16 sm:py-24">
+  <!-- fondo suave con radial + dorado sutil -->
+  <div
+    class="pointer-events-none absolute -z-10 inset-0"
+    style="background:
+      radial-gradient(80% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%),
+      radial-gradient(70% 60% at 50% 100%, rgba(220,38,38,0.18) 0%, transparent 65%);">
+  </div>
+
+  <div class="container-balanced">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center lg:items-start">
+      <!-- Columna texto -->
+      <div class="w-full max-w-2xl mx-auto lg:mx-0">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 text-xs uppercase tracking-wide mx-auto sm:mx-0">
+          <span>✨</span>
+          <span>{eyebrow}</span>
+        </div>
+
+        <h2 class="h2 mt-3 text-white text-center sm:text-left">
+          {title}
+          <span class="block text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff_0%,#d4af37_100%)]">
+            Cumbre Sinergética
+          </span>
+        </h2>
+
+        <p class="lead mt-3 text-white/90 text-center sm:text-left">
+          {lead}
+        </p>
+
+        <!-- Bullets -->
+        <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 place-items-center sm:place-items-stretch">
+          {points.map((p) => (
+            <li class="w-full rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 hover:bg-white/[.07] transition text-center sm:text-left">
+              <div class="flex flex-col items-center sm:flex-row sm:items-start gap-3">
+                <div class="text-3xl sm:text-2xl leading-none">{p.emoji}</div>
+                <div>
+                  <h3 class="text-white font-semibold">{p.title}</h3>
+                  <p class="text-white/80 text-sm mt-1">{p.body}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <!-- “Collage” reemplazado por emojis -->
+        <div class="mt-6 flex items-center justify-center sm:justify-start gap-3">
+          <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🤝</span>
+          <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🌐</span>
+          <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">📈</span>
+        </div>
+
+        <!-- CTA -->
+        {cta && (
+          <div class="mt-6 text-center sm:text-left">
+            <a href={cta.href}
+               class="inline-flex items-center justify-center rounded-full
+                      bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                      text-black font-extrabold uppercase tracking-wide
+                      px-6 py-3 text-base ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[0.98] transition">
+              {cta.text} <span class="ml-2">→</span>
+            </a>
+          </div>
+        )}
+      </div>
+
+      <!-- Columna video -->
+      <div class="relative w-full max-w-3xl mx-auto lg:mx-0">
+        <!-- glow sutil atrás -->
+        <div class="pointer-events-none absolute -inset-6 -z-10 blur-2xl"
+             style="background: radial-gradient(60% 50% at 50% 50%, rgba(220,38,38,0.25) 0%, transparent 70%);">
+        </div>
+
+        <VideoEmbed
+          title="Por qué esta cumbre"
+          mp4Src="/videos/cumbre-trailer.mp4"
+          poster="/videos/cumbre-poster.jpg"
+          rounded="rounded-3xl"
+        />
+
+        <!-- descripción debajo del video eliminada en móvil y escritorio -->
+      </div>
+    </div>
+  </div>
+</section>

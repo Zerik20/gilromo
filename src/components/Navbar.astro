@@ -1,0 +1,94 @@
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-none bg-transparent font-heavy"
+>
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="#" class="flex items-center space-x-4 rtl:space-x-reverse group">
+      <img src="/Logo.svg" alt="Logo GilRomo" class="h-10 w-auto drop-shadow-[0_0_4px_rgba(255,0,128,0.4)]" />
+      <span class="self-center text-2xl font-heavy whitespace-nowrap text-primary-600 dark:text-white drop-shadow-[0_0_6px_rgba(255,0,128,0.5)]">
+        
+      </span>
+    </a>
+
+
+    <button
+      data-collapse-toggle="navbar-multi-level"
+      type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      aria-controls="navbar-multi-level"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg
+        class="w-5 h-5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 17 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15"
+        ></path>
+      </svg>
+    </button>
+
+    <div
+      class="hidden w-full md:flex md:w-auto items-center justify-end space-x-4"
+      id="navbar-multi-level"
+    >
+      <ul
+        class="flex flex-col font-heavy p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-pink-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-pink-800 md:dark:bg-transparent dark:border-pink-700 transition-all duration-300"
+      >
+        <li><a href="#PORQUE" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">¿Porque?</a></li>
+        <li><a href="#BENEFICIOS" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Beneficios</a></li>
+        <li><a href="#OPINIONES" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Opiniones</a></li>
+        <li><a href="#INCLUYE" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Incluye</a></li>
+        <li><a href="#SOBREMI" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Sobre mí</a></li>
+        <li><a href="#CONTACTO" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const navbar = document.getElementById("navbar");
+		if (!navbar) return;
+
+		navbar.classList.add("font-primary");
+
+		window.addEventListener("scroll", () => {
+			if (window.scrollY > 0) {
+				navbar.classList.remove("backdrop-blur-none", "bg-transparent");
+				navbar.classList.add("backdrop-blur-sm", "bg-black/60", "dark:bg-black/60", "shadow-md");
+			} else {
+				navbar.classList.add("backdrop-blur-none", "bg-transparent");
+				navbar.classList.remove("backdrop-blur-sm", "bg-black/60", "dark:bg-black/60", "shadow-md");
+			}
+		});
+
+		const navLinks = navbar.querySelectorAll("a");
+		navLinks.forEach((link) => {
+			link.addEventListener("click", () => {
+				navLinks.forEach((nav) => nav.classList.remove("text-primary-800", "font-bold"));
+				link.classList.add("text-primary-800", "font-bold");
+			});
+		});
+	});
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const toggleButton = document.querySelector('[data-collapse-toggle="navbar-multi-level"]');
+		const menu = document.getElementById("navbar-multi-level");
+
+		if (toggleButton && menu) {
+			toggleButton.addEventListener("click", () => {
+				menu.classList.toggle("hidden");
+			});
+		}
+	});
+  
+</script>

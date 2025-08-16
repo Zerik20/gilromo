@@ -1,0 +1,172 @@
+---
+/**
+ * ContactSection.astro
+ * Props:
+ * - title?: string
+ * - subtitle?: string
+ * - action?: string (URL a donde enviar el form; ej. Formspree o tu endpoint)
+ * - method?: "POST" | "GET"
+ * - netlify?: boolean (si usas Netlify forms)
+ */
+interface Props {
+  title?: string;
+  subtitle?: string;
+  action?: string;
+  method?: string;
+  netlify?: boolean;
+}
+const {
+  title = 'Contáctanos',
+  subtitle = '¿Tienes dudas, quieres cotizar o colaborar? Envíanos un mensaje y te respondemos pronto.',
+  action = '',
+  method = 'POST',
+  netlify = false,
+} = Astro.props;
+---
+
+<section id="contacto" class="relative py-16 sm:py-24">
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+    <header class="mb-10 sm:mb-14 text-center max-w-3xl mx-auto">
+      <h2 class="font-['Playfair_Display'] text-white font-semibold leading-tight text-[clamp(2rem,5vw,3rem)]">
+        {title}
+      </h2>
+      <p class="mt-2 text-[var(--muted)]">{subtitle}</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Formulario -->
+      <div class="rounded-2xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-6 lg:p-8 backdrop-blur">
+        <form
+          action={action || undefined}
+          method={method}
+          class="space-y-4"
+          name="contact"
+          {...(netlify ? { 'data-netlify': 'true' } : {})}
+        >
+          {netlify && (
+            <>
+              <input type="hidden" name="form-name" value="contact" />
+              {/* Honeypot para Netlify */}
+              <p class="hidden">
+                <label> No completar: <input name="bot-field" /> </label>
+              </p>
+            </>
+          )}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-white/90">Nombre</label>
+              <input
+                id="name" name="name" type="text" required
+                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+                placeholder="Tu nombre completo"
+                autocomplete="name"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-white/90">Email</label>
+              <input
+                id="email" name="email" type="email" required
+                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+                placeholder="tunombre@correo.com"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="phone" class="block text-sm font-medium text-white/90">Teléfono (opcional)</label>
+              <input
+                id="phone" name="phone" type="tel" inputmode="tel" pattern="[0-9+() -]{6,}"
+                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+                placeholder="+52 55 1234 5678"
+                autocomplete="tel"
+              />
+            </div>
+            <div>
+              <label for="topic" class="block text-sm font-medium text-white/90">Asunto</label>
+              <input
+                id="topic" name="topic" type="text"
+                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+                placeholder="Cotización, alianza, soporte…"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-white/90">Mensaje</label>
+            <textarea
+              id="message" name="message" rows={5} required
+              class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2 resize-y"
+              placeholder="Cuéntanos brevemente en qué podemos ayudarte…"></textarea>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input id="privacy" name="privacy" type="checkbox" required
+              class="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-primary-600 focus:ring-primary-500" />
+            <label for="privacy" class="text-sm text-white/80">
+              Acepto el tratamiento de mis datos conforme al aviso de privacidad.
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-gold px-5 py-2.5 text-base rounded-full ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
+              Enviar mensaje
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Datos / CTA -->
+      <aside class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5 sm:p-6 lg:p-8">
+        <h3 class="text-white font-semibold text-xl">Información de contacto</h3>
+        <p class="mt-2 text-white/80">
+          Prefieres hablar directo? Escríbenos por WhatsApp o envíanos un correo. ¡Nos encantará ayudarte!
+        </p>
+
+        <ul class="mt-6 space-y-3 text-white/90">
+          <li class="flex items-center gap-3">
+            <span class="i-lucide-mail w-5 h-5" aria-hidden="true"></span>
+            <a href="mailto:contacto@tu-dominio.com" class="hover:underline">contacto@tu-dominio.com</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="i-lucide-phone w-5 h-5" aria-hidden="true"></span>
+            <a href="https://wa.me/5215512345678" target="_blank" class="hover:underline">+52 55 1234 5678</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="i-lucide-map-pin w-5 h-5" aria-hidden="true"></span>
+            <span>Mérida, Yucatán, MX</span>
+          </li>
+        </ul>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="https://wa.me/5215512345678"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-full
+                   bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                   text-black font-extrabold uppercase tracking-wide
+                   px-5 py-2.5 text-sm ring-2 ring-gold-300">
+            WhatsApp
+          </a>
+          <a
+            href="mailto:contacto@tu-dominio.com"
+            class="inline-flex items-center justify-center rounded-full border border-white/20 text-white px-5 py-2.5 text-sm hover:bg-white/10">
+            Enviar correo
+          </a>
+        </div>
+
+        <!-- Mapa/imagen placeholder (puedes reemplazarlo por un iframe de Google Maps) -->
+        <div class="mt-8 overflow-hidden rounded-xl ring-1 ring-white/10">
+          <img
+            src="https://placehold.co/1200x600/111/FFF?text=Mapa+o+imagen"
+            alt="Ubicación / mapa"
+            class="w-full h-48 object-cover sm:h-56 lg:h-64" />
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

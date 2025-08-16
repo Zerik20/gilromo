@@ -1,0 +1,57 @@
+---
+export interface Props {
+  title?: string
+  embedUrl?: string          // opcional si embebes (YouTube/Vimeo)
+  mp4Src?: string            // p.ej. /videos/cumbre-trailer.mp4
+  poster?: string            // p.ej. /videos/cumbre-poster.jpg
+  rounded?: string           // tailwind radius (default rounded-2xl)
+  autoplay?: boolean         // OJO: para autoplay en mobile, requiere muted
+  muted?: boolean
+  loop?: boolean
+}
+
+const {
+  title = 'Video',
+  embedUrl,
+  mp4Src,
+  poster = '/videos/cumbre-poster.jpg',
+  rounded = 'rounded-2xl',
+  autoplay = false,
+  muted = false,
+  loop = false,
+} = Astro.props;
+---
+
+<div class={`relative w-full ${rounded} ring-1 ring-white/10 overflow-hidden bg-black`}>
+  <!-- relación 16:9 -->
+  <div class="pt-[56.25%]"></div>
+
+  <div class="absolute inset-0">
+    {mp4Src ? (
+      <video
+        class="h-full w-full object-cover"
+        title={title}
+        poster={poster}
+        controls
+        preload="metadata"
+        playsinline
+        autoplay={autoplay}
+        muted={muted}
+        loop={loop}
+      >
+        <source src={mp4Src} type="video/mp4" />
+        Tu navegador no soporta el video HTML5.
+      </video>
+    ) : (
+      <iframe
+        class="h-full w-full"
+        src={embedUrl || 'about:blank'}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="no-referrer"
+      ></iframe>
+    )}
+  </div>
+</div>

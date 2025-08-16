@@ -1,0 +1,76 @@
+---
+// ProgramOverview.astro (sin fondo/halo)
+const headlineTop = '1 TALLER'
+const headlineBottom = '+5 CONFERENCIAS'
+
+const workshop = {
+  speaker: 'Jorge Serratos',
+  title:
+    'Taller de 4hr “Reputación Digital” “Marca Personal y Contenido en Redes Sociales”',
+}
+
+const talks = [
+  { speaker: 'Miguel Gámez',   title: '“Diagrama de la marca Personal”' },
+  { speaker: 'Mario Elsner',   title: '“Ser incómodo, es el nuevo liderazgo”' },
+  { speaker: 'Luis Arredondo', title: '“De Emprendedor a Empresario”' },
+  { speaker: 'Ángel Pinto',    title: '“El poder de las Redes Sociales al Vender”' },
+  { speaker: 'Oswaldo Bravo',  title: '“Reconfigurando tus Finanzas, con Deuda Buena”' },
+]
+---
+
+<section class="relative py-16 sm:py-24">
+  <div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+    <!-- Headline -->
+    <div class="text-center">
+      <div
+        class="font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.9] 
+               text-[clamp(2rem,7vw,5rem)]
+               text-transparent bg-clip-text 
+               bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_55%,#7f1d1d_100%)]">
+        {headlineTop}
+      </div>
+      <div
+        class="mt-2 font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.9]
+               text-[clamp(2rem,7vw,5rem)]
+               text-transparent bg-clip-text 
+               bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_55%,#7f1d1d_100%)]">
+        {headlineBottom}
+      </div>
+    </div>
+
+    <!-- Lista -->
+    <div class="mt-10 sm:mt-14 space-y-6 sm:space-y-7">
+      <!-- Workshop destacado -->
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+        <span class="text-red-500 text-3xl sm:text-4xl leading-none">-</span>
+        <span
+          class="text-white font-extrabold tracking-wide
+                 text-[clamp(1.35rem,3.2vw,2.2rem)]">
+          {workshop.speaker}
+        </span>
+        <span
+          class="text-red-400/95 
+                 text-[clamp(1.1rem,2.5vw,1.7rem)] sm:ml-2">
+          {workshop.title}
+        </span>
+      </div>
+
+      <!-- Conferencias -->
+      {talks.map((t) => (
+        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+          <span class="text-red-500 text-3xl sm:text-4xl leading-none">-</span>
+          <span
+            class="text-white font-extrabold tracking-wide
+                   text-[clamp(1.25rem,2.8vw,2rem)]">
+            {t.speaker}
+          </span>
+          <span
+            class="text-red-400/95 
+                   text-[clamp(1rem,2.2vw,1.5rem)] sm:ml-2">
+            {t.title}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
