@@ -1,12 +1,19 @@
 ---
-// ProgramOverview.astro (sin fondo/halo)
+/**
+ * ProgramOverview.astro — Rediseño premium
+ * - Headline con badges y degradado
+ * - Taller destacado en “hero card”
+ * - Conferencias en grid de tarjetas, responsive, centradas
+ * - Timeline sutil en mobile
+ */
+
 const headlineTop = '1 TALLER'
 const headlineBottom = '+5 CONFERENCIAS'
 
 const workshop = {
   speaker: 'Jorge Serratos',
   title:
-    'Taller de 4hr “Reputación Digital” “Marca Personal y Contenido en Redes Sociales”',
+    'Taller de 4hr “Reputación Digital” · “Marca Personal y Contenido en Redes Sociales”',
 }
 
 const talks = [
@@ -18,59 +25,166 @@ const talks = [
 ]
 ---
 
-<section class="relative py-16 sm:py-24">
-  <div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
-    <!-- Headline -->
-    <div class="text-center">
-      <div
-        class="font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.9] 
-               text-[clamp(2rem,7vw,5rem)]
-               text-transparent bg-clip-text 
-               bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_55%,#7f1d1d_100%)]">
+<section id="programa" class="relative py-16 sm:py-24" data-aos="fade-up">
+  <!-- Fondo con destellos suaves -->
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0 opacity-[0.08]"
+      style="background-image:
+        radial-gradient(1px 1px at 18% 22%, #fff 45%, transparent 46%),
+        radial-gradient(1px 1px at 78% 72%, #fff 45%, transparent 46%),
+        radial-gradient(1px 1px at 44% 84%, #fff 45%, transparent 46%);"></div>
+    <div class="absolute inset-0"
+      style="background:
+        radial-gradient(60% 50% at 20% 10%, rgba(231,198,90,0.10), transparent 60%),
+        radial-gradient(55% 45% at 80% 90%, rgba(239,68,68,0.12), transparent 65%);"></div>
+  </div>
+
+  <div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6" data-aos="fade-up">
+    <!-- Headline + Badges -->
+    <header class="text-center" data-aos="fade-up">
+      <div class="mb-4 inline-flex flex-wrap items-center justify-center gap-2" data-aos="fade-up" data-aos-delay="50">
+        <span class="rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase text-black
+                     bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)] ring-1 ring-black/10">
+          Agenda Oficial
+        </span>
+        <span class="rounded-full px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white/80 ring-1 ring-white/15">
+          Networking · Marca · Ventas
+        </span>
+      </div>
+
+      <h2 class="font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.92]
+                 text-[clamp(2.25rem,7vw,5rem)]
+                 text-transparent bg-clip-text
+                 bg-[linear-gradient(180deg,#fff_0%,#d4af37_60%,#b9972c_100%)]"
+          data-aos="zoom-in" data-aos-delay="100">
         {headlineTop}
-      </div>
-      <div
-        class="mt-2 font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.9]
-               text-[clamp(2rem,7vw,5rem)]
-               text-transparent bg-clip-text 
-               bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_55%,#7f1d1d_100%)]">
+      </h2>
+      <h3 class="mt-1 font-['Playfair_Display'] font-extrabold tracking-tight leading-[1.05]
+                 text-[clamp(2.25rem,7vw,5rem)]
+                 text-transparent bg-clip-text
+                 bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_55%,#7f1d1d_100%)]"
+          style="padding-bottom:0.2em;"
+          data-aos="zoom-in" data-aos-delay="150">
         {headlineBottom}
-      </div>
-    </div>
+      </h3>
 
-    <!-- Lista -->
-    <div class="mt-10 sm:mt-14 space-y-6 sm:space-y-7">
-      <!-- Workshop destacado -->
-      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-        <span class="text-red-500 text-3xl sm:text-4xl leading-none">-</span>
-        <span
-          class="text-white font-extrabold tracking-wide
-                 text-[clamp(1.35rem,3.2vw,2.2rem)]">
-          {workshop.speaker}
-        </span>
-        <span
-          class="text-red-400/95 
-                 text-[clamp(1.1rem,2.5vw,1.7rem)] sm:ml-2">
-          {workshop.title}
-        </span>
-      </div>
+      <p class="mx-auto mt-4 max-w-2xl text-white/80" data-aos="fade-up" data-aos-delay="200">
+        Un día diseñado para <strong>aprender, conectar y activar</strong>. Taller inmersivo + conferencias con
+        frameworks accionables para elevar tu marca y resultados.
+      </p>
+    </header>
 
-      <!-- Conferencias -->
-      {talks.map((t) => (
-        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-          <span class="text-red-500 text-3xl sm:text-4xl leading-none">-</span>
-          <span
-            class="text-white font-extrabold tracking-wide
-                   text-[clamp(1.25rem,2.8vw,2rem)]">
-            {t.speaker}
-          </span>
-          <span
-            class="text-red-400/95 
-                   text-[clamp(1rem,2.2vw,1.5rem)] sm:ml-2">
-            {t.title}
-          </span>
+    <!-- Taller destacado (Hero Card) -->
+    <section
+      class="mt-12 overflow-hidden rounded-3xl bg-white/[.06] ring-1 ring-white/10 backdrop-blur-md p-6 sm:p-8 relative"
+      data-aos="flip-left" data-aos-delay="250">
+      <!-- Borde degradado con máscara -->
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-3xl"
+           style="padding:1px;background:
+             linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+             linear-gradient(180deg, rgba(231,198,90,0.55), rgba(185,151,44,0.25));
+             -webkit-mask:
+               linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+             -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_.9fr] gap-8 items-center">
+        <div data-aos="fade-up" data-aos-delay="300">
+          <div class="inline-flex items-center gap-2 rounded-full bg-black/40 ring-1 ring-white/10 px-3 py-1 text-xs font-semibold text-white/80" data-aos="fade-up" data-aos-delay="320">
+            <span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
+            Taller intensivo (4h)
+          </div>
+
+          <h4 class="mt-3 text-white text-3xl sm:text-4xl font-extrabold tracking-tight" data-aos="zoom-in" data-aos-delay="350">
+            {workshop.title}
+          </h4>
+          <p class="mt-2 text-white/80" data-aos="fade-up" data-aos-delay="370">
+            Impartido por <span class="font-semibold text-white">{workshop.speaker}</span>.
+            Estrategias prácticas, ejercicios guiados y playbooks para implementar al día siguiente.
+          </p>
+
+          <ul class="mt-5 grid gap-2 text-white/90">
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="390">
+              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
+              Reputación y narrativa: posicionamiento que abre puertas.
+            </li>
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="410">
+              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
+              Contenido en redes: sistema semanal, formatos y ganchos.
+            </li>
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="430">
+              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
+              Branding personal: claridad de oferta y llamada a la acción.
+            </li>
+          </ul>
         </div>
-      ))}
-    </div>
+
+        <!-- Tarjeta lateral con “deliverables” -->
+        <aside class="rounded-2xl bg-black/40 ring-1 ring-white/10 p-5" data-aos="flip-up" data-aos-delay="350">
+          <p class="text-xs tracking-widest uppercase text-white/60" data-aos="fade-up" data-aos-delay="370">Te llevas</p>
+          <ul class="mt-3 space-y-2 text-white/90">
+            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="390">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
+              Guía de contenido de 30 días
+            </li>
+            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="410">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
+              Checklists de reputación y bio
+            </li>
+            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="430">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
+              Templates de ganchos y CTAs
+            </li>
+          </ul>
+          <div class="mt-5 flex justify-center sm:justify-start">
+            <a href="#contacto"
+               class="inline-flex items-center justify-center rounded-full
+                      bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                      text-black font-extrabold uppercase tracking-wide
+                      px-5 py-2.5 text-sm ring-2 ring-black/10 hover:scale-[1.02] active:scale-[0.98] transition"
+               data-aos="zoom-in" data-aos-delay="450">
+              Quiero el taller <span class="ml-2">→</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Conferencias (grid tarjetas + timeline en mobile) -->
+    <section class="mt-14 sm:mt-16" data-aos="fade-up" data-aos-delay="500">
+      <h4 class="text-center text-white/90 font-semibold tracking-widest uppercase" data-aos="fade-up" data-aos-delay="520">Conferencias</h4>
+
+      <!-- Timeline solo en móvil (decorativo) -->
+      <div class="relative mt-6 sm:hidden" data-aos="fade-up" data-aos-delay="540">
+        <div class="absolute left-4 top-0 bottom-0 w-px bg-white/10"></div>
+        <div class="space-y-4">
+          {talks.map((t, i) => (
+            <article class="relative pl-10" data-aos="fade-up" data-aos-delay={560 + i * 60}>
+              <span class="absolute left-3 top-3 inline-block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-black"></span>
+              <div class="rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-4">
+                <h5 class="text-white font-bold">{t.speaker}</h5>
+                <p class="mt-1 text-white/80">{t.title}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <!-- Grid tarjetas centradas (≥ sm) -->
+      <div class="mt-8 hidden sm:flex flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="600">
+        {talks.map((t, i) => (
+          <article
+            class="w-[min(100%,340px)] rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-5 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.6)]"
+            data-aos="flip-up"
+            data-aos-delay={620 + i * 80}>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+              <p class="text-xs tracking-widest uppercase text-white/60">Ponencia</p>
+            </div>
+            <h5 class="mt-2 text-white text-xl font-extrabold leading-tight">{t.speaker}</h5>
+            <p class="mt-1 text-white/80">{t.title}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   </div>
 </section>

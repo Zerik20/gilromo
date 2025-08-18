@@ -1,5 +1,5 @@
 ---
-// AboutMe.astro
+// AboutMe.astro (Rediseño editorial/premium)
 export interface Props {
   title?: string
   name?: string
@@ -8,7 +8,7 @@ export interface Props {
   portraitSrc?: string
   portraitAlt?: string
   logoSrc?: string | null
-  reverse?: boolean // true => foto a la derecha en desktop
+  reverse?: boolean
 }
 
 const {
@@ -29,69 +29,155 @@ const {
 } = Astro.props
 ---
 
-<section id="sobre-mi" class="relative py-14 sm:py-20">
-  <!-- (QUITADO) halo de sección que oscurecía el fondo -->
+<section id="sobre-mi" class="relative py-16 sm:py-24">
+  <!-- Fondo: textura sutil y destellos dorados -->
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0 opacity-[0.08]"
+         style="background-image: radial-gradient(1px 1px at 8% 12%, #fff 40%, transparent 41%),
+                                  radial-gradient(1px 1px at 78% 62%, #fff 40%, transparent 41%),
+                                  radial-gradient(1px 1px at 44% 84%, #fff 40%, transparent 41%);"></div>
+    <div class="absolute inset-0"
+         style="background:
+           radial-gradient(50% 45% at 20% 10%, rgba(231,198,90,0.15), transparent 60%),
+           radial-gradient(55% 45% at 80% 90%, rgba(231,198,90,0.12), transparent 65%);"></div>
+  </div>
 
-  <div class="container-balanced">
-    <div
-      class={`grid items-center gap-10 lg:gap-14
-              ${reverse ? 'lg:grid-cols-[1.05fr_1fr]' : 'lg:grid-cols-[1fr_1.05fr]'}`}
-    >
-      <!-- Imagen (más pequeña, transparente, con brillo dorado exterior) -->
-      <figure class={`order-1 ${reverse ? 'lg:order-2' : 'lg:order-1'} mx-auto w-full
-                      max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[400px]`}>
-        <div class="relative overflow-visible isolate">
-          <!-- Brillo dorado exterior (no crea halo negro) -->
-          <div
-            aria-hidden="true"
-            class="pointer-events-none absolute -inset-8 -z-10 blur-2xl opacity-80 mix-blend-screen"
-            style="background:
-              radial-gradient(60% 55% at 50% 45%,
-                rgba(231,198,90,0.50) 0%,
-                rgba(231,198,90,0.22) 40%,
-                rgba(231,198,90,0.10) 60%,
-                transparent 75%);">
+  <div class="container-balanced" data-aos="fade-up">
+    <div class={`grid items-center gap-10 lg:gap-16 ${reverse ? 'lg:grid-cols-[1.1fr_1fr]' : 'lg:grid-cols-[1fr_1.1fr]'}`}>
+      <!-- Imagen / Polaroid card -->
+      <figure class={`order-1 ${reverse ? 'lg:order-2' : 'lg:order-1'} mx-auto w-full max-w-[420px]`} data-aos="zoom-in" data-aos-delay="100">
+        <div class="relative">
+          <!-- Cinta superior -->
+          <span aria-hidden="true"
+                class="absolute -top-4 left-6 rotate-[-4deg] h-8 w-24 bg-white/40 dark:bg-white/25 rounded-[2px] shadow-sm backdrop-blur"></span>
+          <!-- Cinta inferior -->
+          <span aria-hidden="true"
+                class="absolute -bottom-4 right-6 rotate-[3deg] h-8 w-24 bg-white/40 dark:bg-white/25 rounded-[2px] shadow-sm backdrop-blur"></span>
+
+          <!-- Marco polaroid con sombra suave -->
+          <div class="rounded-[28px] bg-white/5 ring-1 ring-white/10 p-3 shadow-[0_18px_60px_-20px_rgba(0,0,0,0.55)]">
+            <div class="overflow-hidden rounded-2xl">
+              <img
+                src={portraitSrc}
+                alt={portraitAlt}
+                class="block w-full h-auto object-cover aspect-[4/5]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <!-- Pie de foto -->
+            <figcaption class="px-2 pt-3 pb-2">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-xs tracking-[.22em] uppercase text-white/70">{title}</span>
+                <span class="inline-flex items-center gap-1 text-[11px] text-white/70">
+                  <span class="h-1.5 w-1.5 rounded-full bg-gold-500"></span> Perfil verificado
+                </span>
+              </div>
+              <div class="mt-1 text-sm text-white/80 line-clamp-2">{tagline}</div>
+            </figcaption>
           </div>
-
-          <!-- Marco totalmente transparente, sin sombras -->
-          <img
-            src={portraitSrc}
-            alt={portraitAlt}
-            class="block w-full h-auto object-cover aspect-[4/5] rounded-[2.25rem]"
-            loading="lazy"
-            decoding="async"
-          />
         </div>
       </figure>
 
-      <!-- Texto -->
-      <div class={`order-2 ${reverse ? 'lg:order-1' : 'lg:order-2'} max-w-2xl mx-auto`}>
-        {logoSrc && (
-          <div class="mb-5 flex items-center gap-3">
-            <img src={logoSrc} alt="Logotipo" class="h-12 w-auto opacity-90" loading="lazy" />
+      <!-- Tarjeta de contenido (glass + borde dorado) -->
+      <div class={`order-2 ${reverse ? 'lg:order-1' : 'lg:order-2'} w-full max-w-2xl mx-auto`} data-aos="fade-up" data-aos-delay="200">
+        <div
+          class="relative rounded-3xl p-6 sm:p-8 bg-white/[.06] ring-1 ring-white/10 backdrop-blur-md">
+          <!-- Borde degradado con máscara -->
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-3xl"
+               style="padding:1px;background:
+                 linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+                 linear-gradient(180deg, rgba(231,198,90,0.55), rgba(185,151,44,0.25));
+                 -webkit-mask:
+                   linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                 -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+
+          <!-- Cabecera -->
+          <div class="flex items-center justify-between gap-4" data-aos="fade-up" data-aos-delay="250">
+            <div class="min-w-0">
+              <h2 class="text-white text-3xl/tight sm:text-4xl/tight font-semibold">
+                {name}
+              </h2>
+              <p class="mt-1 text-sm tracking-[.28em] text-white/60 uppercase">Presencia • Trayectoria • Impacto</p>
+            </div>
+            {logoSrc && (
+              <img src={logoSrc} alt="Logotipo" class="h-10 w-auto opacity-90 hidden sm:block" loading="lazy" />
+            )}
           </div>
-        )}
 
-        <p class="text-sm tracking-[.3em] uppercase text-white/70 mb-2">{title}</p>
+          <!-- Separador -->
+          <div class="mt-6 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
-        <h2 class="font-['Playfair_Display'] text-white text-3xl/tight sm:text-4xl/tight font-semibold">
-          {name}
-        </h2>
+          <!-- Chips (bullets) -->
+          <ul class="mt-6 flex flex-wrap gap-2.5">
+            {bullets.map((b, idx) => (
+              <li class="group" data-aos="fade-up" data-aos-delay={300 + idx * 60}>
+                <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.07] px-3 py-1.5 text-sm text-white/90 transition
+                              hover:bg-white/10 hover:border-white/25">
+                  <!-- icono check minimal -->
+                  <svg viewBox="0 0 20 20" aria-hidden="true" class="h-4 w-4">
+                    <path fill="currentColor" class="text-gold-400"
+                          d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z" />
+                  </svg>
+                  <span>{b}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
 
-        <div class="mt-4 h-[3px] w-20 rounded-full bg-gold-500"></div>
+          <!-- Cita destacada -->
+          <blockquote class="mt-7 rounded-2xl bg-black/30 ring-1 ring-white/10 p-5" data-aos="fade-up" data-aos-delay="600">
+            <p class="text-white/90 text-lg italic leading-relaxed">
+              “Las relaciones correctas cambian resultados. Mi trabajo es crear los espacios y las
+              estrategias para que eso suceda.”
+            </p>
+          </blockquote>
 
-        <ul class="mt-6 space-y-3 text-white/95">
-          {bullets.map((b) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-[7px] inline-block h-1.5 w-1.5 rounded-full bg-gold-500"></span>
-              <span class="text-lg">{b}</span>
-            </li>
-          ))}
-        </ul>
+          <!-- Franja de confianza / meta info -->
+          <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="rounded-xl bg-white/[.06] ring-1 ring-white/10 p-4" data-aos="fade-up" data-aos-delay="700">
+              <p class="text-xs tracking-widest uppercase text-white/60">Experiencia</p>
+              <p class="mt-1 text-white font-semibold">+10 años liderando equipos</p>
+            </div>
+            <div class="rounded-xl bg-white/[.06] ring-1 ring-white/10 p-4" data-aos="fade-up" data-aos-delay="750">
+              <p class="text-xs tracking-widest uppercase text-white/60">Proyectos</p>
+              <p class="mt-1 text-white font-semibold">Eventos con ROI medible</p>
+            </div>
+            <div class="rounded-xl bg-white/[.06] ring-1 ring-white/10 p-4" data-aos="fade-up" data-aos-delay="800">
+              <p class="text-xs tracking-widest uppercase text-white/60">Enfoque</p>
+              <p class="mt-1 text-white font-semibold">Negocio • Marca • Ventas</p>
+            </div>
+          </div>
 
-        <p class="mt-8 text-xl font-semibold text-white/90">
-          {tagline}
-        </p>
+          <!-- CTA secundaria (opcional) -->
+          <div class="mt-8" data-aos="zoom-in" data-aos-delay="850">
+            <a href="#contacto"
+               class="inline-flex items-center justify-center rounded-full
+                      bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                      text-black font-extrabold uppercase tracking-wide
+                      px-6 py-3 text-sm ring-2 ring-black/10 hover:scale-[1.02] active:scale-[0.98] transition">
+              Conectar <span class="ml-2">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de firmas / social proof (opcional) -->
+    <div class="mt-12" data-aos="fade-up" data-aos-delay="900">
+      <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10">
+        <div class="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5"></div>
+        <div class="relative flex items-center gap-6 whitespace-nowrap overflow-x-auto py-3 px-4 text-white/70 text-sm">
+          <span class="shrink-0">Presentador •</span>
+          <span class="shrink-0">Mentor •</span>
+          <span class="shrink-0">Conferencista •</span>
+          <span class="shrink-0">Networking Estratégico •</span>
+          <span class="shrink-0">Desarrollo Inmobiliario •</span>
+          <span class="shrink-0">Podcast Host •</span>
+          <span class="shrink-0">Cierre de Ventas •</span>
+          <span class="shrink-0">Marca Personal •</span>
+        </div>
       </div>
     </div>
   </div>

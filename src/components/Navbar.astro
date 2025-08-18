@@ -3,92 +3,96 @@
   class="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-none bg-transparent font-heavy"
 >
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="#" class="flex items-center space-x-4 rtl:space-x-reverse group">
+    <a href="/" class="flex items-center space-x-4 rtl:space-x-reverse group">
       <img src="/Logo.svg" alt="Logo GilRomo" class="h-10 w-auto drop-shadow-[0_0_4px_rgba(255,0,128,0.4)]" />
-      <span class="self-center text-2xl font-heavy whitespace-nowrap text-primary-600 dark:text-white drop-shadow-[0_0_6px_rgba(255,0,128,0.5)]">
-        
-      </span>
+      <span class="self-center text-2xl font-heavy whitespace-nowrap text-primary-600 dark:text-white drop-shadow-[0_0_6px_rgba(255,0,128,0.5)]"></span>
     </a>
 
-
+    <!-- Toggle -->
     <button
       data-collapse-toggle="navbar-multi-level"
       type="button"
-      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-300 rounded-lg md:hidden hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
       aria-controls="navbar-multi-level"
       aria-expanded="false"
     >
-      <span class="sr-only">Open main menu</span>
-      <svg
-        class="w-5 h-5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 17 14"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M1 1h15M1 7h15M1 13h15"
-        ></path>
+      <span class="sr-only">Abrir menú</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
       </svg>
     </button>
 
-    <div
-      class="hidden w-full md:flex md:w-auto items-center justify-end space-x-4"
-      id="navbar-multi-level"
-    >
+    <!-- Menú -->
+    <div id="navbar-multi-level" class="hidden w-full md:flex md:w-auto items-center justify-end md:space-x-4">
       <ul
-        class="flex flex-col font-heavy p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-pink-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-pink-800 md:dark:bg-transparent dark:border-pink-700 transition-all duration-300"
+        class="flex flex-col md:flex-row font-heavy
+               p-4 md:p-0 mt-4 md:mt-0
+               space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse
+               rounded-lg md:rounded-none
+               border border-white/10 md:border-0
+               bg-black md:bg-transparent dark:bg-black md:dark:bg-transparent
+               shadow-lg md:shadow-none transition-all duration-300"
       >
-        <li><a href="#PORQUE" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">¿Porque?</a></li>
-        <li><a href="#BENEFICIOS" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Beneficios</a></li>
-        <li><a href="#OPINIONES" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Opiniones</a></li>
-        <li><a href="#INCLUYE" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Incluye</a></li>
-        <li><a href="#SOBREMI" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Sobre mí</a></li>
-        <li><a href="#CONTACTO" class="block py-2 px-3 text-primary-600 hover:text-primary-800 md:hover:bg-transparent md:p-0 dark:text-white dark:hover:text-primary-800">Contacto</a></li>
+        <!-- Orden final y IDs que debes usar en tus secciones -->
+        <li><a href="#por-que"   class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">¿Por qué?</a></li>
+        <li><a href="#sobre-mi"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Sobre mí</a></li>
+        <li><a href="#ponentes"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Ponentes</a></li>
+        <li><a href="#programa"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Programa</a></li>
+        <li><a href="#contacto"  class="block py-2 px-3 text-white md:text-gold-200 md:hover:text-gold-100 md:p-0">Contacto</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
-		const navbar = document.getElementById("navbar");
-		if (!navbar) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.getElementById("navbar");
+    const toggleButton = document.querySelector('[data-collapse-toggle="navbar-multi-level"]');
+    const menu = document.getElementById("navbar-multi-level");
 
-		navbar.classList.add("font-primary");
+    if (!navbar) return;
 
-		window.addEventListener("scroll", () => {
-			if (window.scrollY > 0) {
-				navbar.classList.remove("backdrop-blur-none", "bg-transparent");
-				navbar.classList.add("backdrop-blur-sm", "bg-black/60", "dark:bg-black/60", "shadow-md");
-			} else {
-				navbar.classList.add("backdrop-blur-none", "bg-transparent");
-				navbar.classList.remove("backdrop-blur-sm", "bg-black/60", "dark:bg-black/60", "shadow-md");
-			}
-		});
+    // Fondo/blur al hacer scroll
+    const applyScrollStyles = () => {
+      if (window.scrollY > 0) {
+        navbar.classList.remove("backdrop-blur-none", "bg-transparent");
+        navbar.classList.add("backdrop-blur-sm", "bg-black/60", "shadow-md");
+      } else {
+        navbar.classList.add("backdrop-blur-none", "bg-transparent");
+        navbar.classList.remove("backdrop-blur-sm", "bg-black/60", "shadow-md");
+      }
+    };
+    applyScrollStyles();
+    window.addEventListener("scroll", applyScrollStyles, { passive: true });
 
-		const navLinks = navbar.querySelectorAll("a");
-		navLinks.forEach((link) => {
-			link.addEventListener("click", () => {
-				navLinks.forEach((nav) => nav.classList.remove("text-primary-800", "font-bold"));
-				link.classList.add("text-primary-800", "font-bold");
-			});
-		});
-	});
+    // Helpers menú móvil (null-safe)
+    const openMenu = () => {
+      if (!menu || !toggleButton) return;
+      menu.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      toggleButton.setAttribute("aria-expanded", "true");
+    };
+    const closeMenu = () => {
+      if (!menu || !toggleButton) return;
+      menu.classList.add("hidden");
+      document.body.style.overflow = "";
+      toggleButton.setAttribute("aria-expanded", "false");
+    };
 
-	document.addEventListener("DOMContentLoaded", function () {
-		const toggleButton = document.querySelector('[data-collapse-toggle="navbar-multi-level"]');
-		const menu = document.getElementById("navbar-multi-level");
+    toggleButton && toggleButton.addEventListener("click", () => {
+      if (!menu) return;
+      const isOpen = !menu.classList.contains("hidden");
+      isOpen ? closeMenu() : openMenu();
+    });
 
-		if (toggleButton && menu) {
-			toggleButton.addEventListener("click", () => {
-				menu.classList.toggle("hidden");
-			});
-		}
-	});
-  
+    // Cerrar al hacer click en un enlace + resaltar activo
+    const links = menu ? Array.from(menu.querySelectorAll('a[href^="#"]')) : [];
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth < 768) closeMenu();
+        links.forEach((l) => l.classList.remove("font-bold", "text-gold-300"));
+        link.classList.add("font-bold", "text-gold-300");
+      });
+    });
+  });
 </script>

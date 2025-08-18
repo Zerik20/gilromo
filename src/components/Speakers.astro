@@ -29,43 +29,45 @@ const {
       'Podcast top en México',
       'Conferencista internacional',
     ],
-    img: 'https://placehold.co/1000x1200/0b0b0b/FFFFFF/png?text=Ponente+Estelar',
+    // Foto local
+    img: '/img/ponentes/Ponente4.png',
     bio:
       'Doctor en Derecho y CEO de múltiples empresas. Creador del Movimiento Sinérgico, referente en liderazgo, ventas y construcción de marca. Ha impactado a miles de emprendedores con estrategias aplicables y resultados medibles.',
   },
+  // 5 invitados (usar Ponente2..Ponente6). Si agregas un 6º, usa Ponente7.png
   guests = [
     {
       name: 'MARIO ELSNER',
       role: 'Líder Internacional de Negocios',
-      img: 'https://placehold.co/800x900/0b0b0b/FFFFFF/png?text=Mario+Elsner',
+      img: '/img/ponentes/Ponente1.png',
       blurb:
         'Promueve la filosofía de Liderazgo de Impacto: equipos sólidos, enfoque humano y resultados sostenibles.',
     },
     {
       name: 'OSWALDO BRAVO',
       role: 'Master Financial Coach',
-      img: 'https://placehold.co/800x900/0b0b0b/FFFFFF/png?text=Oswaldo+Bravo',
+      img: '/img/ponentes/Ponente7.png',
       blurb:
         'Referente en educación financiera. Ha asesorado a empresas y líderes con metodologías prácticas y medibles.',
     },
     {
       name: 'LUIS ARREDONDO',
       role: 'Coach / Conferencista',
-      img: 'https://placehold.co/800x900/0b0b0b/FFFFFF/png?text=Luis+Arredondo',
+      img: '/img/ponentes/Ponente2.png',
       blurb:
         'Director de ActionCOACH Península. Ha asesorado a +500 empresas en México, Reino Unido, Canadá y EE.UU.',
     },
     {
       name: 'ÁNGEL PINTO',
       role: 'Empresario / Inversionista',
-      img: 'https://placehold.co/800x900/0b0b0b/FFFFFF/png?text=Angel+Pinto',
+      img: '/img/ponentes/Ponente5.png',
       blurb:
         'Cofundador y director comercial en Capital Master Broker, referente inmobiliario del sureste mexicano.',
     },
     {
       name: 'MIGUEL GÁMEZ',
       role: 'Director Instituto de Ventas',
-      img: 'https://placehold.co/800x900/0b0b0b/FFFFFF/png?text=Miguel+G%C3%A1mez',
+      img: '/img/ponentes/Ponente6.png',
       blurb:
         'Autor de “El Diagrama del Vendedor” y “Estrategia Comercial”. Experto en metodologías de venta.',
     },
@@ -73,7 +75,7 @@ const {
 } = Astro.props
 ---
 
-<section id="ponentes" class="relative py-16 sm:py-24">
+<section id="ponentes" class="relative py-16 sm:py-24" data-aos="fade-up">
   <!-- Halo sutil -->
   <div
     class="pointer-events-none absolute inset-0 -z-10 opacity-25
@@ -82,15 +84,17 @@ const {
 
   <div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
     <h2 class="text-center font-['Playfair_Display'] text-white font-extrabold leading-[0.95]
-               text-[clamp(2rem,6.5vw,4rem)]">
+               text-[clamp(2rem,6.5vw,4rem)]"
+        data-aos="fade-up">
       PONENTE
-      <span class="text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]">ESTELAR</span>
+      <span class="text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff,#d4af37)]" data-aos="zoom-in" data-aos-delay="100">ESTELAR</span>
     </h2>
 
-    <!-- Ponente estelar -->
+    <!-- Ponente estelar (bio inline, sin modal) -->
     <div
-      class="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-center rounded-3xl bg-black/40 ring-1 ring-white/10 p-5 sm:p-8 shadow-[0_30px_80px_rgba(0,0,0,.55)]">
-      <div class="relative">
+      class="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-center rounded-3xl bg-black/40 ring-1 ring-white/10 p-5 sm:p-8 shadow-[0_30px_80px_rgba(0,0,0,.55)]"
+      data-aos="flip-left" data-aos-delay="150">
+      <div class="relative" data-aos="zoom-in" data-aos-delay="200">
         <div class="overflow-hidden rounded-2xl bg-black/50 ring-1 ring-white/10">
           <img
             src={featured.img}
@@ -101,18 +105,19 @@ const {
         </div>
       </div>
 
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-delay="250">
         <h3 class="text-white text-3xl sm:text-4xl font-extrabold tracking-tight">
           {featured.name}
         </h3>
+
         {featured.headline && (
           <p class="text-primary-300/95 font-semibold">{featured.headline}</p>
         )}
 
         {featured.bullets && featured.bullets.length > 0 && (
           <ul class="mt-2 grid gap-2">
-            {featured.bullets.map((b) => (
-              <li class="inline-flex items-start gap-2 text-white/90">
+            {featured.bullets.map((b, idx) => (
+              <li class="inline-flex items-start gap-2 text-white/90" data-aos="fade-up" data-aos-delay={300 + idx * 80}>
                 <span class="mt-1 inline-block h-2 w-2 rounded-full bg-primary-500"></span>
                 <span class="leading-relaxed">{b}</span>
               </li>
@@ -120,174 +125,40 @@ const {
           </ul>
         )}
 
-        <div class="mt-4">
-          <button
-            type="button"
-            data-modal-open="speaker-main"
-            class="inline-flex items-center gap-2 rounded-full
-                   bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
-                   text-black font-extrabold uppercase tracking-wide
-                   px-5 py-2.5 text-base ring-2 ring-gold-300 hover:scale-[1.03] active:scale-[0.98] transition">
-            Leer bio
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="speaker-main" aria-hidden="true"
-      class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
-      <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-      <div class="relative z-10 w-full max-w-3xl rounded-3xl bg-neutral-950 ring-1 ring-white/10 p-6 sm:p-8 shadow-2xl">
-        <div class="flex items-start justify-between gap-6">
-          <div class="flex-1">
-            <h4 class="text-white text-2xl sm:text-3xl font-extrabold tracking-tight">{featured.name}</h4>
-            {featured.headline && (
-              <p class="mt-1 text-primary-300/95 font-semibold">{featured.headline}</p>
-            )}
-            {featured.bio && (
-              <p class="mt-4 text-white/90 leading-relaxed">{featured.bio}</p>
-            )}
-          </div>
-          <button type="button" data-modal-close="speaker-main" aria-label="Cerrar"
-            class="shrink-0 rounded-full bg-white/10 hover:bg-white/20 p-2 text-white">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-
-        <div class="mt-6 rounded-2xl overflow-hidden ring-1 ring-white/10">
-          <img
-            src={featured.img}
-            alt={featured.name}
-            class="w-full h-auto object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-
-        <div class="mt-6 flex flex-wrap gap-2">
-          {(featured.bullets || []).map((b) => (
-            <span class="rounded-full border border-gold-500/40 bg-gold-500/10 px-3 py-1 text-sm font-semibold text-gold-200">
-              {b}
-            </span>
-          ))}
-        </div>
+        {featured.bio && (
+          <p class="mt-3 text-white/90 leading-relaxed" data-aos="fade-up" data-aos-delay="500">{featured.bio}</p>
+        )}
       </div>
     </div>
 
     <!-- Invitados -->
     <h3 class="mt-16 sm:mt-20 text-center text-white font-['Playfair_Display'] font-extrabold
-               text-[clamp(1.75rem,6vw,3rem)] tracking-tight">
-      PONENTES <span class="text-transparent bg-clip-text bg-[linear-gradient(180deg,#ef4444,#7f1d1d)]">INVITADOS</span>
+               text-[clamp(1.75rem,6vw,3rem)] tracking-tight"
+        data-aos="fade-up" data-aos-delay="600">
+      PONENTES <span class="text-transparent bg-clip-text bg-[linear-gradient(180deg,#ef4444,#7f1d1d)]" data-aos="zoom-in" data-aos-delay="700">INVITADOS</span>
     </h3>
 
-    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Cards centrados en escritorio -->
+    <div class="mt-10 flex flex-wrap justify-center gap-8">
       {guests.map((g, i) => (
-        <article class="group rounded-3xl bg-black/40 ring-1 ring-white/10 shadow-[0_18px_50px_rgba(0,0,0,.5)] overflow-hidden">
-          <button
-            type="button"
-            class="w-full text-left focus:outline-none"
-            data-accordion-trigger={`guest-${i}`}
-            aria-controls={`guest-panel-${i}`}
-            aria-expanded="false">
-            <div class="relative">
-              <img src={g.img} alt={g.name} class="w-full h-auto object-cover" loading="lazy" />
-              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-black/0 p-4">
-                <h4 class="text-white text-xl font-extrabold tracking-tight">{g.name}</h4>
-                {g.role && <p class="text-primary-300/95 font-semibold">{g.role}</p>}
-              </div>
-            </div>
-          </button>
-
-          <div id={`guest-panel-${i}`}
-            class="grid transition-[grid-template-rows] duration-300 ease-out [grid-template-rows:0fr]"
-            aria-hidden="true">
-            <div class="overflow-hidden">
-              <div class="px-4 pb-5 pt-2 text-white/90 leading-relaxed">
-                {g.blurb || 'Próximamente más información.'}
-              </div>
+        <article
+          class="group rounded-3xl bg-black/40 ring-1 ring-white/10 shadow-[0_18px_50px_rgba(0,0,0,.5)] overflow-hidden
+                 w-[min(100%,280px)] sm:w-[min(100%,300px)]"
+          data-aos="flip-up"
+          data-aos-delay={800 + i * 100}>
+          <div class="relative">
+            <img src={g.img} alt={g.name} class="w-full h-auto object-cover" loading="lazy" />
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-black/0 p-4">
+              <h4 class="text-white text-xl font-extrabold tracking-tight text-center">{g.name}</h4>
+              {g.role && <p class="text-primary-300/95 font-semibold text-center">{g.role}</p>}
             </div>
           </div>
 
-          <div class="flex items-center justify-between px-4 py-3 border-t border-white/10">
-            <button
-              type="button"
-              data-accordion-trigger={`guest-${i}`}
-              aria-controls={`guest-panel-${i}`}
-              aria-expanded="false"
-              class="inline-flex items-center gap-2 text-gold-300 hover:text-gold-200 font-semibold">
-              Leer más
-              <svg class="transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <span class="text-xs text-white/50">Card expandible</span>
+          <div class="px-4 pb-5 pt-3 text-white/90 leading-relaxed">
+            {g.blurb || 'Próximamente más información.'}
           </div>
         </article>
       ))}
     </div>
   </div>
 </section>
-
-<script type="module">
-  // ---------- Modal (ponente estelar) ----------
-  const openBtn = document.querySelector('[data-modal-open="speaker-main"]');
-  const modal   = document.getElementById('speaker-main');
-  const closeBtn= document.querySelector('[data-modal-close="speaker-main"]');
-
-  function openModal() {
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  openBtn?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-  modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-  // ---------- Cards expandibles (invitados) ----------
-  const triggers = document.querySelectorAll('[data-accordion-trigger]');
-  const state = new Map(); // id -> expanded
-
-  function setExpanded(id, expanded) {
-    const btns = document.querySelectorAll(`[data-accordion-trigger="${id}"]`);
-    const firstBtn = btns[0];
-    const panelId = firstBtn ? firstBtn.getAttribute('aria-controls') : null;
-    const panel = panelId ? document.getElementById(panelId) : null;
-
-    state.set(id, expanded);
-    btns.forEach((b) => b.setAttribute('aria-expanded', String(expanded)));
-
-    if (panel) {
-      panel.style.setProperty('grid-template-rows', expanded ? '1fr' : '0fr');
-      panel.setAttribute('aria-hidden', String(!expanded));
-      // rotar chevron del botón del footer si existe
-      const footerBtn = Array.from(btns).find((b) => b.querySelector('svg'));
-      const svg = footerBtn ? footerBtn.querySelector('svg') : null;
-      if (svg) svg.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
-    }
-  }
-
-  triggers.forEach((t) => {
-    const idAttr = t.getAttribute('data-accordion-trigger');
-    if (!idAttr) return; // guarda defensiva
-
-    if (!state.has(idAttr)) state.set(idAttr, false);
-
-    t.addEventListener('click', () => {
-      const current = Boolean(state.get(idAttr));
-      setExpanded(idAttr, !current);
-    });
-  });
-</script>

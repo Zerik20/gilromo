@@ -1,0 +1,107 @@
+---
+import { Facebook, Instagram, Tiktok, Whatsapp } from "./Icons";
+
+// URLs de redes (deja vacío "" si aún no la tienes)
+const links = {
+  instagram: "https://www.instagram.com/gil.romo.vargas",
+  spotify: "https://open.spotify.com/show/6iQSGabb209z78O9qvOwpw?si=-34gjdH3SZOlcHFlCs4aMg",
+  facebook: "",
+  whatsapp: "",
+  tiktok: "",
+  youtube: "",
+};
+
+// Mostrar u ocultar iconos deshabilitados
+const showDisabled = true;
+---
+
+<footer class="bg-transparent text-white font-light" data-aos="fade-up">
+  <div class="w-full max-w-7xl mx-auto p-6 md:py-8" data-aos="fade-up">
+    <hr class="my-6 border-white/30" data-aos="fade-up" data-aos-delay="50" />
+
+    <div class="flex flex-col items-center text-center md:flex-row md:justify-between" data-aos="fade-up" data-aos-delay="100">
+      <!-- Logo y nombre -->
+      <div class="flex items-center mb-6 md:mb-0" data-aos="zoom-in" data-aos-delay="150">
+        <img src="/Logo.svg" alt="Logo Gil Romo" class="h-8 w-auto mr-3 drop-shadow-[0_0_4px_rgba(255,0,128,0.4)]" />
+        <span class="text-2xl font-heavy text-white">Cumbre Sinergética</span>
+      </div>
+
+      <!-- Nav del sitio -->
+      <ul class="flex flex-wrap justify-center items-center mb-6 text-sm text-white space-x-6" data-aos="fade-up" data-aos-delay="200">
+        <li><a href="#por-que"   class="hover:text-gold-300 transition-colors">¿Por qué?</a></li>
+        <li><a href="#sobre-mi"  class="hover:text-gold-300 transition-colors">Sobre mí</a></li>
+        <li><a href="#ponentes"  class="hover:text-gold-300 transition-colors">Ponentes</a></li>
+        <li><a href="#programa"  class="hover:text-gold-300 transition-colors">Programa</a></li>
+        <li><a href="#contacto"  class="hover:text-gold-300 transition-colors">Contacto</a></li>
+      </ul>
+    </div>
+
+    <hr class="my-6 border-white/30" data-aos="fade-up" data-aos-delay="250" />
+
+    <!-- Redes -->
+    <div class="flex justify-center space-x-6 mb-6" data-aos="fade-up" data-aos-delay="300">
+      <!-- Instagram -->
+      <a href={links.instagram || "#"} target={links.instagram ? "_blank" : undefined}
+         class={`text-white hover:text-[#E4405F] transition-colors ${!links.instagram && showDisabled ? "opacity-40 pointer-events-none" : ""}`}
+         data-aos="zoom-in" data-aos-delay="320">
+        <Instagram class="w-6 h-6" />
+        <span class="sr-only">Instagram</span>
+      </a>
+
+      <!-- Spotify (SVG inline) -->
+      <a href={links.spotify || "#"} target={links.spotify ? "_blank" : undefined}
+         class={`text-white hover:text-[#1DB954] transition-colors ${!links.spotify && showDisabled ? "opacity-40 pointer-events-none" : ""}`}
+         data-aos="zoom-in" data-aos-delay="340">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 6.64 5.37 12 12 12s12-5.36 12-12C24 5.37 18.63 0 12 0zm5.5 17.28a.9.9 0 0 1-1.24.3c-3.4-2.07-7.7-2.54-12.77-1.39a.9.9 0 1 1-.41-1.75c5.5-1.28 10.2-.74 14 1.55.43.26.57.83.3 1.29zm1.68-3.38a1.13 1.13 0 0 1-1.56.37c-3.9-2.4-9.83-3.11-14.4-1.7a1.13 1.13 0 1 1-.64-2.18c5.18-1.53 11.66-.74 16 2.01.52.32.68 1 .36 1.5zm.15-3.66c-4.56-2.7-12.23-2.95-16.63-1.7a1.34 1.34 0 1 1-.75-2.57c5.01-1.46 13.42-1.15 18.6 1.9a1.34 1.34 0 0 1-1.22 2.37z"/>
+        </svg>
+        <span class="sr-only">Spotify</span>
+      </a>
+
+      <!-- Facebook (vacío/deshabilitado) -->
+      <a href={links.facebook || "#"} target={links.facebook ? "_blank" : undefined}
+         class={`text-white hover:text-[#1877F2] transition-colors ${!links.facebook && showDisabled ? "opacity-40 pointer-events-none" : ""}`}
+         data-aos="zoom-in" data-aos-delay="360">
+        <Facebook class="w-6 h-6" />
+        <span class="sr-only">Facebook</span>
+      </a>
+
+      <!-- WhatsApp (actualizado con tu número) -->
+      <a href="https://wa.me/524476701434" target="_blank"
+         class="text-white hover:text-[#25D366] transition-colors"
+         data-aos="zoom-in" data-aos-delay="380">
+        <Whatsapp class="w-6 h-6" />
+        <span class="sr-only">WhatsApp</span>
+      </a>
+
+      <!-- TikTok (vacío/deshabilitado) -->
+      <a href={links.tiktok || "#"} target={links.tiktok ? "_blank" : undefined}
+         class={`text-white hover:text-[#69C9D0] transition-colors ${!links.tiktok && showDisabled ? "opacity-40 pointer-events-none" : ""}`}
+         data-aos="zoom-in" data-aos-delay="400">
+        <Tiktok class="w-6 h-6" />
+        <span class="sr-only">TikTok</span>
+      </a>
+
+      <!-- YouTube (vacío/deshabilitado) -->
+      <a href={links.youtube || "#"} target={links.youtube ? "_blank" : undefined}
+         class={`text-white hover:text-[#FF0000] transition-colors ${!links.youtube && showDisabled ? "opacity-40 pointer-events-none" : ""}`}
+         data-aos="zoom-in" data-aos-delay="420">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10 15.5l6-3.5-6-3.5v7z"/><path d="M21.8 8s-.2-1.4-.8-2c-.8-.9-1.7-.9-2.1-1C15.9 4.5 12 4.5 12 4.5h-.1s-3.9 0-6.9.5c-.4.1-1.3.1-2.1 1C2.3 6.6 2.2 8 2.2 8S2 9.6 2 11.2v1.5C2 14.3 2.2 16 2.2 16s.2 1.4.8 2c.8.9 1.8.9 2.2 1C8.1 19.5 12 19.5 12 19.5s3.9 0 6.9-.5c.4-.1 1.3-.1 2.1-1 .6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.5c.1-1.6-.1-3.2-.1-3.2z"/>
+        </svg>
+        <span class="sr-only">YouTube</span>
+      </a>
+    </div>
+
+    <hr class="my-6 border-white/30" />
+
+    <div class="text-center">
+      <span class="block text-sm text-white">
+        © 2025 <a href="/" class="hover:text-gold-300 transition-colors">Cumbre Sinergética</a> · Gil Romo. Todos los derechos reservados.
+      </span>
+      <span class="block text-xs text-white/70 mt-2">
+        Hecho con ❤️ en Mérida, Yucatán
+      </span>
+    </div>
+  </div>
+</footer>

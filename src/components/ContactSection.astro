@@ -1,172 +1,223 @@
 ---
-/**
- * ContactSection.astro
- * Props:
- * - title?: string
- * - subtitle?: string
- * - action?: string (URL a donde enviar el form; ej. Formspree o tu endpoint)
- * - method?: "POST" | "GET"
- * - netlify?: boolean (si usas Netlify forms)
- */
 interface Props {
   title?: string;
   subtitle?: string;
-  action?: string;
-  method?: string;
-  netlify?: boolean;
+  action?: string;      // URL de tu Apps Script (Google Sheets)
+  method?: 'POST'|'GET';
 }
 const {
   title = 'Contáctanos',
   subtitle = '¿Tienes dudas, quieres cotizar o colaborar? Envíanos un mensaje y te respondemos pronto.',
-  action = '',
+  action = 'https://script.google.com/macros/s/AKfycbzLTcsFDhzTV2sVlsKvPyC7490_VO3CcqrEvCcaVlfDadG0t0QXGDmlPayK0DaBCjiXqg/exec',
   method = 'POST',
-  netlify = false,
 } = Astro.props;
 ---
 
-<section id="contacto" class="relative py-16 sm:py-24">
-  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
-    <header class="mb-10 sm:mb-14 text-center max-w-3xl mx-auto">
+<section id="contacto" class="relative py-16 sm:py-24" data-aos="fade-up">
+  <div class="mx-auto w-full max-w-[900px] px-4 sm:px-6">
+    <header class="mb-6 sm:mb-8 text-center max-w-3xl mx-auto" data-aos="fade-up">
       <h2 class="font-['Playfair_Display'] text-white font-semibold leading-tight text-[clamp(2rem,5vw,3rem)]">
         {title}
       </h2>
       <p class="mt-2 text-[var(--muted)]">{subtitle}</p>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Formulario -->
-      <div class="rounded-2xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-6 lg:p-8 backdrop-blur">
-        <form
-          action={action || undefined}
-          method={method}
-          class="space-y-4"
-          name="contact"
-          {...(netlify ? { 'data-netlify': 'true' } : {})}
-        >
-          {netlify && (
-            <>
-              <input type="hidden" name="form-name" value="contact" />
-              {/* Honeypot para Netlify */}
-              <p class="hidden">
-                <label> No completar: <input name="bot-field" /> </label>
-              </p>
-            </>
-          )}
+    <!-- Banner de ubicación -->
+    <div class="mb-8 rounded-2xl ring-1 ring-white/10 overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+      <div class="relative p-4 sm:p-5 bg-black/50">
+        <div class="pointer-events-none absolute inset-0 -z-10 opacity-30"
+             style="background:
+               radial-gradient(120% 160% at 100% 0%, rgba(127,29,29,.65) 0%, transparent 60%),
+               radial-gradient(120% 160% at 0% 100%, rgba(127,29,29,.4) 0%, transparent 60%);"></div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="name" class="block text-sm font-medium text-white/90">Nombre</label>
-              <input
-                id="name" name="name" type="text" required
-                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-                placeholder="Tu nombre completo"
-                autocomplete="name"
-              />
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-medium text-white/90">Email</label>
-              <input
-                id="email" name="email" type="email" required
-                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-                placeholder="tunombre@correo.com"
-                autocomplete="email"
-              />
-            </div>
-          </div>
+        <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+               class="h-8 w-8 sm:h-9 sm:w-9 text-red-500 flex-none">
+            <path fill="currentColor"
+              d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/>
+          </svg>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="phone" class="block text-sm font-medium text-white/90">Teléfono (opcional)</label>
-              <input
-                id="phone" name="phone" type="tel" inputmode="tel" pattern="[0-9+() -]{6,}"
-                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-                placeholder="+52 55 1234 5678"
-                autocomplete="tel"
-              />
-            </div>
-            <div>
-              <label for="topic" class="block text-sm font-medium text-white/90">Asunto</label>
-              <input
-                id="topic" name="topic" type="text"
-                class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-                placeholder="Cotización, alianza, soporte…"
-              />
-            </div>
+          <div class="font-extrabold leading-tight">
+            <div class="text-white text-xl sm:text-2xl">Centro de Convenciones Siglo XXI</div>
+            <div class="text-white text-lg sm:text-xl">Salón UXMAL 4, Mérida Yucatán</div>
           </div>
-
-          <div>
-            <label for="message" class="block text-sm font-medium text-white/90">Mensaje</label>
-            <textarea
-              id="message" name="message" rows={5} required
-              class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2 resize-y"
-              placeholder="Cuéntanos brevemente en qué podemos ayudarte…"></textarea>
-          </div>
-
-          <div class="flex items-start gap-3">
-            <input id="privacy" name="privacy" type="checkbox" required
-              class="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-primary-600 focus:ring-primary-500" />
-            <label for="privacy" class="text-sm text-white/80">
-              Acepto el tratamiento de mis datos conforme al aviso de privacidad.
-            </label>
-          </div>
-
-          <div class="pt-2">
-            <button
-              type="submit"
-              class="btn-gold px-5 py-2.5 text-base rounded-full ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
-              Enviar mensaje
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
+    </div>
 
-      <!-- Datos / CTA -->
-      <aside class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5 sm:p-6 lg:p-8">
-        <h3 class="text-white font-semibold text-xl">Información de contacto</h3>
-        <p class="mt-2 text-white/80">
-          Prefieres hablar directo? Escríbenos por WhatsApp o envíanos un correo. ¡Nos encantará ayudarte!
-        </p>
-
-        <ul class="mt-6 space-y-3 text-white/90">
-          <li class="flex items-center gap-3">
-            <span class="i-lucide-mail w-5 h-5" aria-hidden="true"></span>
-            <a href="mailto:contacto@tu-dominio.com" class="hover:underline">contacto@tu-dominio.com</a>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="i-lucide-phone w-5 h-5" aria-hidden="true"></span>
-            <a href="https://wa.me/5215512345678" target="_blank" class="hover:underline">+52 55 1234 5678</a>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="i-lucide-map-pin w-5 h-5" aria-hidden="true"></span>
-            <span>Mérida, Yucatán, MX</span>
-          </li>
-        </ul>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a
-            href="https://wa.me/5215512345678"
-            target="_blank"
-            class="inline-flex items-center justify-center rounded-full
-                   bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
-                   text-black font-extrabold uppercase tracking-wide
-                   px-5 py-2.5 text-sm ring-2 ring-gold-300">
-            WhatsApp
-          </a>
-          <a
-            href="mailto:contacto@tu-dominio.com"
-            class="inline-flex items-center justify-center rounded-full border border-white/20 text-white px-5 py-2.5 text-sm hover:bg-white/10">
-            Enviar correo
-          </a>
+    <!-- Tarjeta única -->
+    <div class="rounded-2xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-7 lg:p-8 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,.45)]" data-aos="fade-up" data-aos-delay="200">
+      <!-- Form mejor distribuido (grid de 6 columnas) -->
+      <form id="inscripcionForm" action={action || undefined} method={method}
+            class="grid grid-cols-1 sm:grid-cols-6 gap-4" data-aos="fade-up" data-aos-delay="220">
+        <!-- Nombre -->
+        <div class="sm:col-span-6" data-aos="fade-up" data-aos-delay="240">
+          <label for="nombre" class="block text-sm font-medium text-white/90">Nombre</label>
+          <input
+            id="nombre" name="nombre" type="text" required autocapitalize="words" autocomplete="name"
+            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
+                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+            placeholder="Tu nombre completo" />
         </div>
 
-        <!-- Mapa/imagen placeholder (puedes reemplazarlo por un iframe de Google Maps) -->
-        <div class="mt-8 overflow-hidden rounded-xl ring-1 ring-white/10">
-          <img
-            src="https://placehold.co/1200x600/111/FFF?text=Mapa+o+imagen"
-            alt="Ubicación / mapa"
-            class="w-full h-48 object-cover sm:h-56 lg:h-64" />
+        <!-- Correo -->
+        <div class="sm:col-span-3" data-aos="fade-up" data-aos-delay="260">
+          <label for="correo" class="block text-sm font-medium text-white/90">Correo</label>
+          <input
+            id="correo" name="correo" type="email" required autocomplete="email"
+            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
+                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+            placeholder="tunombre@correo.com" />
         </div>
-      </aside>
+
+        <!-- Teléfono -->
+        <div class="sm:col-span-3" data-aos="fade-up" data-aos-delay="280">
+          <label for="telefono" class="block text-sm font-medium text-white/90">Teléfono</label>
+          <input
+            id="telefono" name="telefono" type="tel" inputmode="tel" pattern="[0-9+() -]{6,}" required autocomplete="tel"
+            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
+                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+            placeholder="+52 447 670 14 34" />
+        </div>
+
+        <!-- Profesión -->
+        <div class="sm:col-span-4" data-aos="fade-up" data-aos-delay="300">
+          <label for="profesion" class="block text-sm font-medium text-white/90">Profesión</label>
+          <input
+            id="profesion" name="profesion" type="text" required
+            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
+                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+            placeholder="Tu profesión" />
+        </div>
+
+        <!-- Edad -->
+        <div class="sm:col-span-2" data-aos="fade-up" data-aos-delay="320">
+          <label for="edad" class="block text-sm font-medium text-white/90">Edad</label>
+          <input
+            id="edad" name="edad" type="number" min="1" required
+            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
+                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
+            placeholder="Tu edad" />
+        </div>
+
+        <!-- Hidden: Estatus por defecto -->
+        <input type="hidden" name="estatus" value="Sin contactar" />
+        <input type="hidden" name="estatus_color" value="#F59E0B" /> <!-- Amber 500 -->
+
+        <!-- CTA -->
+        <div class="sm:col-span-6 pt-2 flex justify-center items-center gap-4" data-aos="zoom-in" data-aos-delay="340">
+          <button id="submitBtn" type="submit"
+            class="btn-gold px-5 py-2.5 text-base rounded-full ring-2 ring-gold-300
+                   hover:scale-[1.02] active:scale-[.98] transition">
+            Enviar
+          </button>
+          <div id="loader" class="hidden">
+            <span class="inline-block border-4 border-gold-400 border-t-transparent rounded-full w-7 h-7 animate-spin"></span>
+          </div>
+        </div>
+      </form>
+
+      <!-- Separador -->
+      <div class="my-8 h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" data-aos="fade-up" data-aos-delay="360"></div>
+
+      <!-- Info + mapa (en la misma tarjeta) -->
+      <div class="grid grid-cols-1 gap-5" data-aos="fade-up" data-aos-delay="380">
+        <div>
+          <h3 class="text-white font-semibold text-xl" data-aos="fade-up" data-aos-delay="400">Información de contacto</h3>
+          <p class="mt-2 text-white/80" data-aos="fade-up" data-aos-delay="420">
+            ¿Prefieres hablar directo? Escríbenos por WhatsApp o envíanos un correo. ¡Nos encantará ayudarte!
+          </p>
+
+          <ul class="mt-5 space-y-3 text-white/90">
+            <li class="flex items-center gap-3" data-aos="fade-up" data-aos-delay="440">
+              <span class="i-lucide-mail w-5 h-5" aria-hidden="true"></span>
+              <a href="mailto:gil.romo.vargas@gmail.com" class="hover:underline">gil.romo.vargas@gmail.com</a>
+            </li>
+            <li class="flex items-center gap-3" data-aos="fade-up" data-aos-delay="460">
+              <span class="i-lucide-phone w-5 h-5" aria-hidden="true"></span>
+              <a href="https://wa.me/524476701434" target="_blank" class="hover:underline">+52 447 670 14 34</a>
+            </li>
+            <li class="flex items-center gap-3" data-aos="fade-up" data-aos-delay="480">
+              <span class="i-lucide-map-pin w-5 h-5" aria-hidden="true"></span>
+              <span>Mérida, Yucatán, MX</span>
+            </li>
+          </ul>
+
+          <div class="mt-5 flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="500">
+            <a href="https://wa.me/524476701434" target="_blank"
+               class="inline-flex items-center justify-center rounded-full
+                      bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                      text-black font-extrabold uppercase tracking-wide
+                      px-5 py-2.5 text-sm ring-2 ring-gold-300"
+               data-aos="zoom-in" data-aos-delay="520">
+              WhatsApp
+            </a>
+            <a href="mailto:gil.romo.vargas@gmail.com"
+               class="inline-flex items-center justify-center rounded-full border border-white/20 text-white px-5 py-2.5 text-sm hover:bg-white/10"
+               data-aos="zoom-in" data-aos-delay="540">
+              Enviar correo
+            </a>
+          </div>
+        </div>
+
+        <!-- Mapa -->
+        <div class="overflow-hidden rounded-xl ring-1 ring-white/10" data-aos="fade-up" data-aos-delay="560">
+          <iframe
+            title="Centro de Convenciones Yucatán Siglo XXI"
+            class="w-full aspect-[16/9] sm:h-64"
+            src="https://www.google.com/maps?q=Centro%20de%20convenciones%20y%20exposiciones%20Yucat%C3%A1n%20Siglo%20XXI&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+          <div class="p-3 text-left text-sm text-white/90">
+            <strong>Centro de Convenciones Siglo XXI</strong> — Salón UXMAL 4, Mérida Yucatán
+          </div>
+          <div class="px-3 pb-3 text-right text-sm">
+            <a
+              href="https://www.google.com/maps/place/Centro+de+convenciones+y+exposiciones+Yucat%C3%A1n+Siglo+XXI/@21.0333901,-89.6300073,18z/data=!4m6!3m5!1s0x8f56742600e2aed3:0x6916ea0e8d04a6f7!8m2!3d21.0331618!4d-89.6301324!16zL20vMGdfdl9w?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              class="text-white/80 hover:underline"
+              data-aos="fade-up" data-aos-delay="580">
+              Ver en Google Maps →
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- JS plano (sin 'as ...') para evitar TS8016 -->
+  <script type="module">
+    const formEl = document.getElementById('inscripcionForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loader = document.getElementById('loader');
+
+    if (formEl) {
+      formEl.addEventListener('submit', async (e) => {
+        if (!formEl.action) return; // sin action, submit nativo
+        e.preventDefault();
+
+        if (loader) loader.classList.remove('hidden');
+        if (submitBtn) { submitBtn.setAttribute('disabled', 'true'); submitBtn.textContent = 'Enviando…'; }
+
+        try {
+          const formData = new FormData(formEl);
+          const resp = await fetch(formEl.action, { method: formEl.method || 'POST', body: formData });
+
+          if (resp.ok) {
+            if (typeof window !== 'undefined' && typeof window.fbq === 'function') { try { window.fbq('track', 'Lead'); } catch {} }
+            window.location.href = '/gracias';
+          } else {
+            alert('Ocurrió un error al enviar el formulario.');
+          }
+        } catch {
+          alert('No se pudo enviar. Intenta más tarde.');
+        } finally {
+          if (loader) loader.classList.add('hidden');
+          if (submitBtn) { submitBtn.removeAttribute('disabled'); submitBtn.textContent = 'Enviar'; }
+        }
+      });
+    }
+  </script>
 </section>

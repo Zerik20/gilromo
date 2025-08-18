@@ -56,20 +56,21 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
 
   <!-- Contenido en z-10 para quedar encima del fondo -->
   <div class="relative z-10 mx-auto w-full max-w-[1320px] px-3 sm:px-6 lg:px-8">
-    <header class="text-center max-w-4xl mx-auto">
+    <header class="text-center max-w-4xl mx-auto" data-aos="fade-up">
       <h1 class="font-['Playfair_Display'] text-white font-semibold leading-[0.92] text-[clamp(2rem,5vw,4rem)]">
         {titleMain}
         <span class="block mt-1 font-extrabold tracking-[.12em] uppercase text-[clamp(2rem,7vw,5rem)]
-                     text-transparent bg-clip-text bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_50%,#7f1d1d_100%)]">
+                     text-transparent bg-clip-text bg-[linear-gradient(180deg,#ef4444_0%,#dc2626_50%,#7f1d1d_100%)]"
+              data-aos="zoom-in">
           {titleEmph}
         </span>
       </h1>
-      <p class="mt-0 text-white/85 text-[clamp(.9rem,1.6vw,1.05rem)]">{tagline}</p>
+      <p class="mt-0 text-white/85 text-[clamp(.9rem,1.6vw,1.05rem)]" data-aos="fade-up" data-aos-delay="100">{tagline}</p>
     </header>
 
     <div class="relative mt-2 sm:-mt-14 lg:-mt-18 xl:-mt-24 pb-20 sm:pb-36">
       <!-- ESCRITORIO -->
-      <div class="hidden sm:block">
+      <div class="hidden sm:block" data-aos="fade-up" data-aos-delay="200">
         <div class="relative mx-auto max-w-[1320px]">
           <div class="flex items-end justify-center">
             {ordered.map((s,i)=>{
@@ -77,7 +78,9 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
               const isCenter = i === centerIdx;
               const captionLift = isCenter ? '-translate-y-9 sm:-translate-y-11' : '-translate-y-8 sm:-translate-y-10';
               return (
-                <figure class={`relative ${zLayers[i]||'z-[8]'} ${yOffsets[i]||''} ${i===0?'':'-ml-12 md:-ml-20 lg:-ml-28 xl:-ml-32'} group`}>
+                <figure class={`relative ${zLayers[i]||'z-[8]'} ${yOffsets[i]||''} ${i===0?'':'-ml-12 md:-ml-20 lg:-ml-28 xl:-ml-32'} group`}
+                        data-aos={isCenter ? "zoom-in" : "fade-up"}
+                        data-aos-delay={isCenter ? "300" : "400"}>
                   <img src={s.image} alt={`Foto de ${s.name}`}
                        class={`w-auto object-contain select-none drop-shadow-[0_28px_70px_rgba(0,0,0,.65)]
                                ${heights[i]||H_SIDE} transition-transform duration-300 ease-out group-hover:-translate-y-1`}
@@ -102,7 +105,7 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
       </div>
 
       <!-- MÓVIL (anti-recorte) -->
-      <div class="sm:hidden -mx-3 px-3">
+      <div class="sm:hidden -mx-3 px-3" data-aos="fade-up" data-aos-delay="200">
         <div id="heroMobile" data-start={centerIdx}
              class="relative h-[66svh] max-h-[580px] overflow-visible pt-safe">
           {ordered.map((s, i) => {
@@ -111,7 +114,9 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
             return (
               <figure data-idx={i}
                 class="absolute inset-0 flex items-center justify-center opacity-0 contain-[layout_paint_style_size]"
-                style="--extraY:0px; transition: transform 420ms cubic-bezier(.2,.7,.2,1), opacity 240ms ease, filter 420ms cubic-bezier(.2,.7,.2,1); will-change: transform, opacity, filter; transform-origin: center bottom; backface-visibility: hidden;">
+                style="--extraY:0px; transition: transform 420ms cubic-bezier(.2,.7,.2,1), opacity 240ms ease, filter 420ms cubic-bezier(.2,.7,.2,1); will-change: transform, opacity, filter; transform-origin: center bottom; backface-visibility: hidden;"
+                data-aos={isCenter ? "zoom-in" : "fade-up"}
+                data-aos-delay={isCenter ? "300" : "400"}>
                 <img src={s.image} alt={`Foto de ${s.name}`}
                      class="max-h-[min(64svh,580px)] w-auto object-contain select-none sm:drop-shadow-[0_22px_46px_rgba(0,0,0,.58)]"
                      loading={i>1 ? 'lazy' : 'eager'} decoding="async" />
@@ -134,7 +139,7 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
       </div>
 
       <!-- Fecha + CTA -->
-      <div class="absolute inset-x-0 bottom-2 flex flex-col items-center gap-2">
+      <div class="absolute inset-x-0 bottom-2 flex flex-col items-center gap-2" data-aos="fade-up" data-aos-delay="500">
         <div class="rounded-full border border-primary-600/80 bg-black/60 px-4 py-1.5">
           <div class="flex items-center justify-center flex-wrap gap-y-1">
             {dateParts.map((p) => (
@@ -146,12 +151,13 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
           </div>
         </div>
         {cta && (
-          <a href={cta.href}
+          <a href="#contacto"
              class="inline-flex items-center justify-center rounded-full
                     bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
                     text-black font-extrabold uppercase tracking-wide
                     px-5 py-2.5 text-base sm:text-lg ring-2 ring-gold-300
-                    hover:scale-[1.03] active:scale-[0.98] transition-transform">
+                    hover:scale-[1.03] active:scale-[0.98] transition-transform"
+             data-aos="zoom-in" data-aos-delay="600">
             {cta.text}
           </a>
         )}

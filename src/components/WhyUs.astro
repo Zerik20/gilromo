@@ -23,8 +23,8 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative section py-16 sm:py-24">
-  <!-- fondo suave con radial + dorado sutil -->
+<section id="por-que" class="relative section py-16 sm:py-24">
+  <!-- fondo suave -->
   <div
     class="pointer-events-none absolute -z-10 inset-0"
     style="background:
@@ -32,30 +32,85 @@ const {
       radial-gradient(70% 60% at 50% 100%, rgba(220,38,38,0.18) 0%, transparent 65%);">
   </div>
 
-  <div class="container-balanced">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center lg:items-start">
-      <!-- Columna texto -->
-      <div class="w-full max-w-2xl mx-auto lg:mx-0">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 text-xs uppercase tracking-wide mx-auto sm:mx-0">
+  <div class="container-balanced" data-aos="fade-up">
+    <div class="grid grid-cols-1 lg:[grid-template-columns:1.25fr_0.85fr] gap-8 lg:gap-14 items-start">
+      <!-- Columna video -->
+      <div class="relative order-1 lg:order-none w-full mx-auto lg:mx-0 lg:sticky lg:top-24"
+           id="video-block"
+           data-aos="zoom-in"
+           data-aos-delay="100">
+        <!-- halo -->
+        <div class="pointer-events-none absolute -inset-6 -z-10 blur-2xl"
+             style="background: radial-gradient(60% 50% at 50% 50%, rgba(220,38,38,0.25) 0%, transparent 70%);">
+        </div>
+
+        <div class="group relative rounded-3xl ring-1 ring-white/15 bg-white/5 overflow-hidden">
+          <!-- borde dorado sutil -->
+          <div class="absolute inset-0 pointer-events-none"
+               style="mask: linear-gradient(black, transparent 70%); background:
+                 radial-gradient(800px 200px at 50% -10%, rgba(212,175,55,.18), transparent)"></div>
+
+          <!-- Video -->
+          <div class="aspect-[16/9] w-full">
+            <VideoEmbed
+              title="Por qué esta cumbre"
+              mp4Src="/videos/cumbre-trailer.mp4"
+              poster="/videos/cumbre-poster.jpg"
+              rounded="rounded-3xl"
+              client:load
+            />
+          </div>
+
+          <!-- Overlay UI: título y botones -->
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+
+          <div class="absolute inset-x-4 bottom-4 flex items-center justify-between">
+            <div class="pointer-events-auto hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-black/50 text-white/90 text-xs ring-1 ring-white/15 backdrop-blur">
+              <span class="inline-block h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span>Trailer</span>
+            </div>
+            <div class="pointer-events-auto ml-auto flex items-center gap-2">
+              <button
+                type="button"
+                id="toggle-mute"
+                class="rounded-full px-3 py-2 text-xs font-medium bg-black/90 hover:bg-white transition shadow-sm">
+                Silenciar/Activar
+              </button>
+              <button
+                type="button"
+                id="open-full"
+                class="rounded-full px-3 py-2 text-xs font-semibold bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)] text-black ring-1 ring-black/10 hover:scale-[1.02] active:scale-[0.98] transition">
+                Ver en grande
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna texto (más compacta) -->
+      <div class="w-full max-w-2xl mx-auto lg:mx-0 order-2 lg:order-none" data-aos="fade-up" data-aos-delay="200">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 text-xs uppercase tracking-wide mx-auto sm:mx-0"
+             data-aos="fade-up" data-aos-delay="250">
           <span>✨</span>
           <span>{eyebrow}</span>
         </div>
 
-        <h2 class="h2 mt-3 text-white text-center sm:text-left">
+        <h2 class="h2 mt-3 text-white text-center sm:text-left" data-aos="zoom-in" data-aos-delay="300">
           {title}
           <span class="block text-transparent bg-clip-text bg-[linear-gradient(180deg,#fff_0%,#d4af37_100%)]">
             Cumbre Sinergética
           </span>
         </h2>
 
-        <p class="lead mt-3 text-white/90 text-center sm:text-left">
+        <p class="lead mt-3 text-white/90 text-center sm:text-left" data-aos="fade-up" data-aos-delay="350">
           {lead}
         </p>
 
-        <!-- Bullets -->
         <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 place-items-center sm:place-items-stretch">
-          {points.map((p) => (
-            <li class="w-full rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 hover:bg-white/[.07] transition text-center sm:text-left">
+          {points.map((p, idx) => (
+            <li class="w-full rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 hover:bg-white/[.07] transition text-center sm:text-left"
+                data-aos="fade-up"
+                data-aos-delay={400 + idx * 80}>
               <div class="flex flex-col items-center sm:flex-row sm:items-start gap-3">
                 <div class="text-3xl sm:text-2xl leading-none">{p.emoji}</div>
                 <div>
@@ -67,17 +122,15 @@ const {
           ))}
         </ul>
 
-        <!-- “Collage” reemplazado por emojis -->
-        <div class="mt-6 flex items-center justify-center sm:justify-start gap-3">
+        <div class="mt-6 flex items-center justify-center sm:justify-start gap-3" data-aos="fade-up" data-aos-delay="700">
           <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🤝</span>
           <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🌐</span>
           <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">📈</span>
         </div>
 
-        <!-- CTA -->
         {cta && (
-          <div class="mt-6 text-center sm:text-left">
-            <a href={cta.href}
+          <div class="mt-6 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="800">
+            <a href="#contacto"
                class="inline-flex items-center justify-center rounded-full
                       bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
                       text-black font-extrabold uppercase tracking-wide
@@ -87,23 +140,98 @@ const {
           </div>
         )}
       </div>
-
-      <!-- Columna video -->
-      <div class="relative w-full max-w-3xl mx-auto lg:mx-0">
-        <!-- glow sutil atrás -->
-        <div class="pointer-events-none absolute -inset-6 -z-10 blur-2xl"
-             style="background: radial-gradient(60% 50% at 50% 50%, rgba(220,38,38,0.25) 0%, transparent 70%);">
-        </div>
-
-        <VideoEmbed
-          title="Por qué esta cumbre"
-          mp4Src="/videos/cumbre-trailer.mp4"
-          poster="/videos/cumbre-poster.jpg"
-          rounded="rounded-3xl"
-        />
-
-        <!-- descripción debajo del video eliminada en móvil y escritorio -->
-      </div>
     </div>
   </div>
+
+  <!-- Overlay fullscreen -->
+  <div id="video-overlay" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
+    <div class="relative mx-auto w-full max-w-6xl p-4">
+      <div class="mx-auto aspect-[16/9] rounded-2xl overflow-hidden ring-1 ring-white/15">
+        <VideoEmbed
+          title="Por qué esta cumbre — Full"
+          mp4Src="/videos/cumbre-trailer.mp4"
+          poster="/videos/cumbre-poster.jpg"
+          rounded="rounded-2xl"
+          client:load
+        />
+      </div>
+      <button id="close-full" class="absolute right-6 top-6 rounded-full px-3 py-2 text-sm font-semibold bg-white/90 hover:bg-white transition">
+        Cerrar ✕
+      </button>
+    </div>
+  </div>
+
+  <script>
+  // Helper tipado: nunca devuelve undefined
+  function getVideo(el: Element | null): HTMLVideoElement | null {
+    if (!el) return null;
+    return el.querySelector<HTMLVideoElement>('video');
+  }
+
+  // Lookups tipados
+  const block = document.getElementById('video-block') as HTMLElement | null;
+  const muteBtn = document.getElementById('toggle-mute') as HTMLButtonElement | null;
+  const openBtn = document.getElementById('open-full') as HTMLButtonElement | null;
+  const overlay = document.getElementById('video-overlay') as HTMLElement | null;
+  const closeBtn = document.getElementById('close-full') as HTMLButtonElement | null;
+
+  const video: HTMLVideoElement | null = getVideo(block);
+
+  // Autoplay seguro (muted + playsinline recomendado dentro de VideoEmbed)
+  if (video) {
+    video.muted = true;
+    
+    video.playsInline = true;
+
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          // Evita error si el navegador bloquea autoplay
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      }
+    }, { threshold: 0.35 });
+
+    io.observe(video);
+
+    muteBtn?.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (!video.paused) video.play().catch(() => {});
+    });
+  }
+
+  // Overlay fullscreen
+  openBtn?.addEventListener('click', () => {
+    overlay?.classList.remove('hidden');
+    const ovVideo = getVideo(overlay);
+    if (ovVideo) {
+      ovVideo.muted = false;
+      ovVideo.playsInline = true;
+      ovVideo.play().catch(() => {});
+    }
+    video?.pause();
+  });
+
+  function closeOverlay() {
+    overlay?.classList.add('hidden');
+    const ovVideo = getVideo(overlay);
+    ovVideo?.pause();
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+  }
+
+  closeBtn?.addEventListener('click', closeOverlay);
+
+  overlay?.addEventListener('click', (e: MouseEvent) => {
+    const target = e.target;
+    if (overlay && target instanceof HTMLElement && target === overlay) {
+      closeOverlay();
+    }
+  });
+</script>
 </section>

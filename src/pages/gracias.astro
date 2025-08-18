@@ -1,0 +1,178 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Footer from "../components/Footer.astro";
+
+const titulo = "¡Gracias por registrarte!";
+const subtitulo = "Tu lugar está casi listo. Mira el mensaje de bienvenida y elige tu tipo de boleto con descuento.";
+
+const video = {
+  src: "/videos/VideoGracias.mp4",   // cámbialo si usas otra ruta
+  poster: "/videos/Poster2.jpg",     // opcional
+  title: "Gracias por registrarte",
+};
+
+const gateway = "https://www.tusboletos.mx/evento/En-conexion-presenta-cumbre-sinergetica-en-merida";
+const coupon  = "CONEXION";
+
+// Precios y bullets como en tu captura
+const tiers = [
+  {
+    name: "ACCESO GENERAL",
+    pillClass: "bg-[#d6c29a] text-black", // beige dorado
+    bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa"],
+    original: "$2,100.00 Mxn.",
+    presale:  "$1,060.00 Mxn.",
+    offer:    "$1,350.00 Mxn.",
+    badge: "HOT SALE",
+  },
+  {
+    name: "ACCESO PLATINO",
+    pillClass: "bg-zinc-300 text-black",
+    bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa", "Lugares Preferentes"],
+    original: "$2,850.00 Mxn.",
+    presale:  "$1,600.00 Mxn.",
+    offer:    "$2,100.00 Mxn.",
+    badge: "HOT SALE",
+  },
+  {
+    name: "ACCESO VIP",
+    pillClass: "bg-red-600/95 text-white",
+    bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa", "Lugares Preferentes", "Convivencia con Jorge Serratos", "Cena (Tres tiempos)"],
+    original: "$4,750.00 Mxn.",
+    presale:  "$3,160.00 Mxn.",
+    offer:    "$3,950.00 Mxn.",
+    badge: "VIP",
+  },
+];
+---
+
+<SiteLayout title="Gracias | Cumbre Sinergética" description="Página de confirmación de registro" noindex={true}>
+  <section class="relative py-16 sm:py-24" data-aos="fade-up">
+    <div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
+      <!-- Título -->
+      <header class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+        <h1 class="font-['Playfair_Display'] text-white font-extrabold leading-[0.95] text-[clamp(2rem,6vw,3.25rem)]">
+          {titulo}
+        </h1>
+        <p class="mt-3 text-white/80">{subtitulo}</p>
+      </header>
+
+      <!-- Video -->
+      <div class="mt-8 sm:mt-10" data-aos="zoom-in" data-aos-delay="100">
+        <div class="overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_18px_50px_rgba(0,0,0,.45)]">
+          <div class="aspect-video bg-black">
+            <video
+              src={video.src}
+              poster={video.poster}
+              class="w-full h-full object-cover"
+              controls
+              playsinline
+              preload="metadata"
+              title={video.title}>
+              Tu navegador no soporta el video.
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cupón -->
+      <div class="mt-8 flex flex-col items-center gap-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="inline-flex items-center gap-3 rounded-full bg-white/5 ring-1 ring-white/10 px-4 py-2" data-aos="fade-up" data-aos-delay="220">
+          <span class="text-white/80 text-sm">Código de descuento</span>
+          <code id="couponText" class="text-black font-extrabold px-3 py-1 rounded-full bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]">{coupon}</code>
+          <button id="copyBtn" class="text-sm px-3 py-1 rounded-full border border-white/20 text-white hover:bg-white/10" data-aos="zoom-in" data-aos-delay="240">Copiar</button>
+        </div>
+        <a href={gateway} target="_blank"
+           class="inline-flex items-center justify-center rounded-full
+                  bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                  text-black font-extrabold uppercase tracking-wide
+                  px-6 py-3 text-base ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition"
+           data-aos="zoom-in" data-aos-delay="260">
+          Comprar boletos
+        </a>
+        <p class="text-xs text-white/60" data-aos="fade-up" data-aos-delay="280">Aplica el código <span class="font-semibold text-white">{coupon}</span> al pagar.</p>
+      </div>
+
+      <!-- Planes -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up" data-aos-delay="300">
+        {tiers.map((t, idx) => (
+          <article class="rounded-3xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-6 shadow-[0_18px_50px_rgba(0,0,0,.45)] flex flex-col"
+                   data-aos="flip-left" data-aos-delay={320 + idx * 100}>
+            <h3 class="text-center text-white font-extrabold tracking-[.2em] text-sm">{t.name}</h3>
+
+            <div class={`mt-4 rounded-2xl ${t.pillClass} px-5 py-4 shadow-inner`}>
+              <ul class="text-sm space-y-2">
+                {t.bullets.map((b, i) => (
+                  <li class="flex items-start gap-2" data-aos="fade-up" data-aos-delay={340 + i * 40}>
+                    <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-black/40 dark:bg-white/70"></span>
+                    <span class={t.pillClass.includes("text-white") ? "text-white" : "text-black"}>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="mt-4 text-center" data-aos="fade-up" data-aos-delay="360">
+              <p class="text-white/70 line-through">{t.original}</p>
+              <p class="text-white/80">Preventa <span class="font-semibold">{t.presale}</span></p>
+              <p class="mt-1 font-extrabold text-[clamp(1.15rem,2.2vw,1.35rem)] text-red-400">
+                OFERTA <span class="text-white">{t.offer}</span>
+              </p>
+            </div>
+
+            <div class="mt-3 flex items-center justify-center gap-2" data-aos="zoom-in" data-aos-delay="380">
+              <span class="inline-flex items-center rounded-full bg-red-600/90 text-white text-[10px] font-bold px-2 py-1">
+                {t.badge}
+              </span>
+            </div>
+
+            <div class="mt-5" data-aos="fade-up" data-aos-delay="400">
+              <a href={gateway} target="_blank"
+                 class="w-full inline-flex items-center justify-center rounded-full
+                        bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                        text-black font-extrabold uppercase tracking-wide
+                        px-5 py-2.5 text-sm ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
+                Comprar boletos
+              </a>
+              <p class="mt-2 text-center text-xs text-white/60">Usa el código <span class="text-white font-semibold">{coupon}</span> al pagar.</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="500">
+        <a href={gateway} target="_blank"
+           class="inline-flex items-center justify-center rounded-full
+                  bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                  text-black font-extrabold uppercase tracking-wide
+                  px-6 py-3 text-base ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
+          Ir a la pasarela de pagos
+        </a>
+        <p class="mt-2 text-xs text-white/60">Aplica <span class="font-semibold text-white">{coupon}</span> para tu descuento.</p>
+      </div>
+    </div>
+
+    <!-- Script: copiar cupón (JS plano, sin aserciones TS) -->
+    <script type="module">
+      const copyBtn = document.getElementById('copyBtn');
+      const couponText = document.getElementById('couponText');
+      copyBtn?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(couponText?.textContent || 'CONEXION');
+          copyBtn.textContent = 'Copiado ✓';
+          setTimeout(() => (copyBtn.textContent = 'Copiar'), 2000);
+        } catch (_) {
+          const r = document.createRange();
+          r.selectNodeContents(couponText);
+          const sel = window.getSelection();
+          sel?.removeAllRanges();
+          sel?.addRange(r);
+          document.execCommand('copy');
+          sel?.removeAllRanges();
+          copyBtn.textContent = 'Copiado ✓';
+          setTimeout(() => (copyBtn.textContent = 'Copiar'), 2000);
+        }
+      });
+    </script>
+  </section>
+  <Footer />
+</SiteLayout>
