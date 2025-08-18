@@ -27,7 +27,7 @@ const {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
     <link rel="icon" href="/favicon.ico" />
-    <!-- Sin AOS ni fondos adicionales: solo global.css -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
      <!-- Fondo estático (rosa -> rojo) -->
@@ -37,5 +37,8 @@ const {
     ></div>
     <Navbar />
     <slot />
+     <!-- Scripts -->
+    <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script is:inline> AOS.init(); </script>
   </body>
 </html>
