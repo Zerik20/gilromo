@@ -30,6 +30,11 @@ const {
     <!-- Sin AOS ni fondos adicionales: solo global.css -->
   </head>
   <body>
+     <!-- Fondo estático (rosa -> rojo) -->
+    <div 
+      class="fixed inset-0 -z-10 h-full w-full"
+      style="background: radial-gradient(125% 125% at 50% 10%, #000 40%, #dc2626 100%);"
+    ></div>
     <Navbar />
     <slot />
   </body>
