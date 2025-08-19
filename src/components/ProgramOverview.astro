@@ -1,10 +1,7 @@
 ---
 /**
- * ProgramOverview.astro — Rediseño premium
- * - Headline con badges y degradado
- * - Taller destacado en “hero card”
- * - Conferencias en grid de tarjetas, responsive, centradas
- * - Timeline sutil en mobile
+ * ProgramOverview.astro
+ * (Ajuste: aside muestra los MÓDULOS del taller en lugar de “Te llevas”)
  */
 
 const headlineTop = '1 TALLER'
@@ -12,8 +9,7 @@ const headlineBottom = '+5 CONFERENCIAS'
 
 const workshop = {
   speaker: 'Jorge Serratos',
-  title:
-    'Taller de 4hr “Reputación Digital” · “Marca Personal y Contenido en Redes Sociales”',
+  title: 'Taller de 4 hrs de Marca personal y contenido en redes',
 }
 
 const talks = [
@@ -94,47 +90,44 @@ const talks = [
             Taller intensivo (4h)
           </div>
 
+          <!-- Ponente + título (misma línea) -->
           <h4 class="mt-3 text-white text-3xl sm:text-4xl font-extrabold tracking-tight" data-aos="zoom-in" data-aos-delay="350">
-            {workshop.title}
+            <span class="font-extrabold">{workshop.speaker}</span>
+            <span class="text-white/80"> {workshop.title}</span>
           </h4>
-          <p class="mt-2 text-white/80" data-aos="fade-up" data-aos-delay="370">
-            Impartido por <span class="font-semibold text-white">{workshop.speaker}</span>.
-            Estrategias prácticas, ejercicios guiados y playbooks para implementar al día siguiente.
-          </p>
 
-          <ul class="mt-5 grid gap-2 text-white/90">
-            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="390">
-              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
-              Reputación y narrativa: posicionamiento que abre puertas.
-            </li>
-            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="410">
-              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
-              Contenido en redes: sistema semanal, formatos y ganchos.
-            </li>
-            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="430">
-              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-gold-500 inline-block"></span>
-              Branding personal: claridad de oferta y llamada a la acción.
-            </li>
-          </ul>
+          <!-- Texto introductorio -->
+          <p class="mt-3 text-white" data-aos="fade-up" data-aos-delay="370">
+            🥇<strong>JORGE SERRATOS</strong> Speaker Internacional impartiendo un <strong>Taller de 4 hrs</strong> de
+            <strong>Marca personal y contenido en redes</strong>.
+          </p>
+          <p class="mt-2 text-white/90" data-aos="fade-up" data-aos-delay="390">
+            ✨️ <strong>Descripción del Taller de Jorge Serratos:</strong><br/>
+            🎖 El taller <em>Reputación Digital</em> proporciona herramientas clave para gestionar la reputación digital
+            y desarrollar tu marca personal.
+          </p>
         </div>
 
-        <!-- Tarjeta lateral con “deliverables” -->
+        <!-- ASIDE: ahora muestra los MÓDULOS (reemplaza “Te llevas”) -->
         <aside class="rounded-2xl bg-black/40 ring-1 ring-white/10 p-5" data-aos="flip-up" data-aos-delay="350">
-          <p class="text-xs tracking-widest uppercase text-white/60" data-aos="fade-up" data-aos-delay="370">Te llevas</p>
-          <ul class="mt-3 space-y-2 text-white/90">
-            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="390">
-              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
-              Guía de contenido de 30 días
+          <p class="text-xs tracking-widest uppercase text-white/60" data-aos="fade-up" data-aos-delay="370">
+            Módulos del taller
+          </p>
+          <ol class="mt-3 space-y-3 text-white/90">
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="390">
+              <span class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold">1</span>
+              <span><strong>Módulo I:</strong> El mundo de las redes sociales</span>
             </li>
-            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="410">
-              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
-              Checklists de reputación y bio
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="410">
+              <span class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold">2</span>
+              <span><strong>Módulo II:</strong> Reputación digital vs Marca personal</span>
             </li>
-            <li class="flex items-center gap-2" data-aos="fade-up" data-aos-delay="430">
-              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.6 1.6L8 16 18 6l-1.6-1.6z"/></svg>
-              Templates de ganchos y CTAs
+            <li class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="430">
+              <span class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold">3</span>
+              <span><strong>Módulo III:</strong> Creación de contenido efectivo</span>
             </li>
-          </ul>
+          </ol>
+
           <div class="mt-5 flex justify-center sm:justify-start">
             <a href="#contacto"
                class="inline-flex items-center justify-center rounded-full
@@ -153,7 +146,7 @@ const talks = [
     <section class="mt-14 sm:mt-16" data-aos="fade-up" data-aos-delay="500">
       <h4 class="text-center text-white/90 font-semibold tracking-widest uppercase" data-aos="fade-up" data-aos-delay="520">Conferencias</h4>
 
-      <!-- Timeline solo en móvil (decorativo) -->
+      <!-- Timeline solo en móvil -->
       <div class="relative mt-6 sm:hidden" data-aos="fade-up" data-aos-delay="540">
         <div class="absolute left-4 top-0 bottom-0 w-px bg-white/10"></div>
         <div class="space-y-4">
@@ -161,8 +154,10 @@ const talks = [
             <article class="relative pl-10" data-aos="fade-up" data-aos-delay={560 + i * 60}>
               <span class="absolute left-3 top-3 inline-block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-black"></span>
               <div class="rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-4">
-                <h5 class="text-white font-bold">{t.speaker}</h5>
-                <p class="mt-1 text-white/80">{t.title}</p>
+                <p class="text-white">
+                  <span class="font-bold">{t.speaker}</span>
+                  <span class="text-white/80"> {t.title}</span>
+                </p>
               </div>
             </article>
           ))}
@@ -180,8 +175,10 @@ const talks = [
               <span class="inline-flex h-2 w-2 rounded-full bg-red-500"></span>
               <p class="text-xs tracking-widest uppercase text-white/60">Ponencia</p>
             </div>
-            <h5 class="mt-2 text-white text-xl font-extrabold leading-tight">{t.speaker}</h5>
-            <p class="mt-1 text-white/80">{t.title}</p>
+            <p class="mt-2 text-white text-xl leading-tight">
+              <span class="font-extrabold">{t.speaker}</span>
+              <span class="text-white/80"> {t.title}</span>
+            </p>
           </article>
         ))}
       </div>

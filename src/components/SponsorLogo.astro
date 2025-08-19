@@ -1,0 +1,56 @@
+---
+const logos = [
+  { src: '/img/patrocinadores/Patrocinador1.png', alt: 'Patrocinador 1' },
+  { src: '/img/patrocinadores/Patrocinador2.png', alt: 'Patrocinador 2' },
+  { src: '/img/patrocinadores/Patrocinador3.png', alt: 'Patrocinador 3' },
+  { src: '/img/patrocinadores/Patrocinador4.png', alt: 'Patrocinador 4' },
+  { src: '/img/patrocinadores/Patrocinador5.png', alt: 'Patrocinador 5' },
+  { src: '/img/patrocinadores/Patrocinador6.png', alt: 'Patrocinador 6' },
+];
+---
+
+<section class="w-full py-10">
+  <h2 
+    class="text-center text-3xl font-bold mb-10"
+    data-aos="fade-up"
+    data-aos-duration="800"
+  >
+    Aliados comerciales
+  </h2>
+
+  <!-- Fijamos una altura a cada celda y forzamos a que la imagen se contenga dentro -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 justify-items-center">
+    {logos.map((logo, index) => (
+      <figure
+        class="w-full flex items-center justify-center h-[96px] sm:h-[120px] lg:h-[140px] overflow-hidden"
+        aria-label={logo.alt}
+        data-aos="zoom-in"
+        data-aos-delay={String(index * 120)}
+        data-aos-duration="700"
+        data-aos-once="true"
+        style="will-change: transform;"
+      >
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+          decoding="async"
+          class="block h-full w-auto max-w-[80%] sm:max-w-[85%] object-contain"
+        />
+      </figure>
+    ))}
+  </div>
+</section>
+
+<script type="module">
+  import AOS from 'aos';
+  if (typeof window !== 'undefined') {
+    const init = () =>
+      AOS.init({
+        once: true,
+        easing: 'ease-out-cubic'
+      });
+    if (document.readyState === 'complete') init();
+    else window.addEventListener('load', init, { once: true });
+  }
+</script>

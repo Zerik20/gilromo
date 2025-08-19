@@ -6,22 +6,25 @@ const titulo = "¡Gracias por registrarte!";
 const subtitulo = "Tu lugar está casi listo. Mira el mensaje de bienvenida y elige tu tipo de boleto con descuento.";
 
 const video = {
-  src: "/videos/VideoGracias.mp4",   // cámbialo si usas otra ruta
-  poster: "/videos/Poster2.jpg",     // opcional
+  src: "/videos/VideoGracias.mp4",
+  poster: "/videos/Poster2.jpg",
   title: "Gracias por registrarte",
 };
 
 const gateway = "https://www.tusboletos.mx/evento/En-conexion-presenta-cumbre-sinergetica-en-merida";
 const coupon  = "CONEXION";
 
-// Precios y bullets como en tu captura
+// Enlace del grupo de WhatsApp
+const waGroup = "https://chat.whatsapp.com/Gj40Zoxggt23Yhm28g1Duc?mode=ac_t";
+
+// Precios y bullets
 const tiers = [
   {
     name: "ACCESO GENERAL",
-    pillClass: "bg-[#d6c29a] text-black", // beige dorado
+    pillClass: "bg-[#d6c29a] text-black",
     bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa"],
     original: "$2,100.00 Mxn.",
-    presale:  "$1,060.00 Mxn.",
+    presale:  "$1,080.00 Mxn.",
     offer:    "$1,350.00 Mxn.",
     badge: "HOT SALE",
   },
@@ -30,7 +33,7 @@ const tiers = [
     pillClass: "bg-zinc-300 text-black",
     bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa", "Lugares Preferentes"],
     original: "$2,850.00 Mxn.",
-    presale:  "$1,600.00 Mxn.",
+    presale:  "$1,680.00 Mxn.",
     offer:    "$2,100.00 Mxn.",
     badge: "HOT SALE",
   },
@@ -77,11 +80,14 @@ const tiers = [
 
       <!-- Cupón -->
       <div class="mt-8 flex flex-col items-center gap-3" data-aos="fade-up" data-aos-delay="200">
+        <!--
         <div class="inline-flex items-center gap-3 rounded-full bg-white/5 ring-1 ring-white/10 px-4 py-2" data-aos="fade-up" data-aos-delay="220">
           <span class="text-white/80 text-sm">Código de descuento</span>
           <code id="couponText" class="text-black font-extrabold px-3 py-1 rounded-full bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]">{coupon}</code>
           <button id="copyBtn" class="text-sm px-3 py-1 rounded-full border border-white/20 text-white hover:bg-white/10" data-aos="zoom-in" data-aos-delay="240">Copiar</button>
         </div>
+        -->
+        <p class="text-white/90 text-center font-semibold">Solicita tu código de descuento</p>
         <a href={gateway} target="_blank"
            class="inline-flex items-center justify-center rounded-full
                   bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
@@ -90,7 +96,9 @@ const tiers = [
            data-aos="zoom-in" data-aos-delay="260">
           Comprar boletos
         </a>
+        <!--
         <p class="text-xs text-white/60" data-aos="fade-up" data-aos-delay="280">Aplica el código <span class="font-semibold text-white">{coupon}</span> al pagar.</p>
+        -->
       </div>
 
       <!-- Planes -->
@@ -133,7 +141,8 @@ const tiers = [
                         px-5 py-2.5 text-sm ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
                 Comprar boletos
               </a>
-              <p class="mt-2 text-center text-xs text-white/60">Usa el código <span class="text-white font-semibold">{coupon}</span> al pagar.</p>
+              <!-- <p class="mt-2 text-center text-xs text-white/60">Usa el código <span class="text-white font-semibold">{coupon}</span> al pagar.</p> -->
+              <p class="mt-2 text-center text-xs text-white/60">Solicita tu código de descuento.</p>
             </div>
           </article>
         ))}
@@ -147,32 +156,128 @@ const tiers = [
                   px-6 py-3 text-base ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[.98] transition">
           Ir a la pasarela de pagos
         </a>
-        <p class="mt-2 text-xs text-white/60">Aplica <span class="font-semibold text-white">{coupon}</span> para tu descuento.</p>
+        <!-- <p class="mt-2 text-xs text-white/60">Aplica <span class="font-semibold text-white">{coupon}</span> para tu descuento.</p> -->
+        <p class="mt-2 text-xs text-white/60">Solicita tu código de descuento.</p>
       </div>
     </div>
 
-    <!-- Script: copiar cupón (JS plano, sin aserciones TS) -->
-    <script type="module">
-      const copyBtn = document.getElementById('copyBtn');
-      const couponText = document.getElementById('couponText');
-      copyBtn?.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(couponText?.textContent || 'CONEXION');
-          copyBtn.textContent = 'Copiado ✓';
-          setTimeout(() => (copyBtn.textContent = 'Copiar'), 2000);
-        } catch (_) {
-          const r = document.createRange();
-          r.selectNodeContents(couponText);
-          const sel = window.getSelection();
-          sel?.removeAllRanges();
-          sel?.addRange(r);
-          document.execCommand('copy');
-          sel?.removeAllRanges();
-          copyBtn.textContent = 'Copiado ✓';
-          setTimeout(() => (copyBtn.textContent = 'Copiar'), 2000);
-        }
-      });
-    </script>
+    <!-- MODAL obligatorio: Únete al grupo de WhatsApp -->
+    <div
+      id="waModal"
+      data-wa={waGroup}
+      class="fixed inset-0 z-[80] hidden items-center justify-center min-h-[100dvh] bg-black/80 backdrop-blur-sm p-4"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="waModalTitle"
+    >
+      <div class="w-full max-w-md rounded-2xl bg-neutral-900 ring-1 ring-white/10 p-6 text-white shadow-2xl max-h-[88svh] overflow-auto">
+        <h2 id="waModalTitle" class="text-xl font-bold">Únete al grupo de WhatsApp</h2>
+        <p class="mt-2 text-white/80 text-sm">
+          Para continuar, presiona el botón. Se abrirá WhatsApp para solicitar unirte al grupo oficial del evento.
+        </p>
+
+        <div class="mt-5 flex flex-col gap-3">
+          <button
+            id="waJoinBtn"
+            type="button"
+            class="inline-flex items-center justify-center rounded-full
+                   bg-[linear-gradient(180deg,#25D366_0%,#20BD5A_100%)]
+                   text-black font-extrabold uppercase tracking-wide
+                   px-5 py-2.5 text-sm ring-2 ring-black/10 hover:scale-[1.02] active:scale-[.98] transition"
+          >
+            Entrar al grupo y continuar
+          </button>
+
+          <p id="waHint" class="text-xs text-white/60 hidden">
+            Si tu navegador bloquea ventanas emergentes, habilítalas y vuelve a intentarlo.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script: copiar cupón -->
+<script type="module">
+  const modal = document.getElementById('waModal');
+  const joinBtn = document.getElementById('waJoinBtn');
+  const hint = document.getElementById('waHint');
+
+  const waLinkHref = modal?.dataset.wa || "";
+
+  let lastFocus = null;
+
+  function lockScroll(lock) {
+    if (lock) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
+
+  function openModal() {
+    if (!modal) return;
+
+    if (modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
+    lastFocus = document.activeElement;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modal.style.display = 'flex';
+    lockScroll(true);
+    setTimeout(() => joinBtn?.focus(), 0);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    modal.style.display = 'none';
+    lockScroll(false);
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  }
+
+  window.addEventListener('load', openModal, { once: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+  modal?.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      joinBtn?.focus();
+    }
+  });
+
+  // ✅ SIEMPRE abre en nueva pestaña y cierra el modal en la principal
+  joinBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const a = document.createElement('a');
+    a.href = waLinkHref;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.referrerPolicy = 'no-referrer';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    closeModal();
+  });
+</script>
+
   </section>
   <Footer />
 </SiteLayout>
