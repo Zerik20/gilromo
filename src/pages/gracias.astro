@@ -96,6 +96,23 @@ const tiers = [
            data-aos="zoom-in" data-aos-delay="260">
           Comprar boletos
         </a>
+
+        <!-- ✅ Texto y botón al grupo de WhatsApp (sin modal), colocado justo DESPUÉS del botón principal -->
+        <p class="mt-4 text-white/80 text-sm" data-aos="fade-up" data-aos-delay="280">
+          Únete al <span class="font-semibold text-white">grupo oficial de WhatsApp</span> para recibir avisos y soporte del evento:
+        </p>
+        <a
+          href={waGroup}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-2 inline-flex items-center justify-center rounded-full
+                 bg-[linear-gradient(180deg,#25D366_0%,#20BD5A_100%)]
+                 text-black font-extrabold uppercase tracking-wide
+                 px-6 py-3 text-base ring-2 ring-black/10 hover:scale-[1.02] active:scale-[.98] transition"
+          data-aos="zoom-in" data-aos-delay="300"
+        >
+          Unirme al grupo
+        </a>
         <!--
         <p class="text-xs text-white/60" data-aos="fade-up" data-aos-delay="280">Aplica el código <span class="font-semibold text-white">{coupon}</span> al pagar.</p>
         -->
@@ -161,7 +178,8 @@ const tiers = [
       </div>
     </div>
 
-    <!-- MODAL obligatorio: Únete al grupo de WhatsApp -->
+    <!-- MODAL obligatorio: Únete al grupo de WhatsApp (COMENTADO) -->
+    <!--
     <div
       id="waModal"
       data-wa={waGroup}
@@ -194,90 +212,89 @@ const tiers = [
         </div>
       </div>
     </div>
+    -->
 
-    <!-- Script: copiar cupón -->
-<script type="module">
-  const modal = document.getElementById('waModal');
-  const joinBtn = document.getElementById('waJoinBtn');
-  const hint = document.getElementById('waHint');
+    <!-- Script del modal (COMENTADO) -->
+    <!--
+    <script type="module">
+      const modal = document.getElementById('waModal');
+      const joinBtn = document.getElementById('waJoinBtn');
+      const hint = document.getElementById('waHint');
 
-  const waLinkHref = modal?.dataset.wa || "";
+      const waLinkHref = modal?.dataset.wa || "";
 
-  let lastFocus = null;
+      let lastFocus = null;
 
-  function lockScroll(lock) {
-    if (lock) {
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-    }
-  }
+      function lockScroll(lock) {
+        if (lock) {
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+        }
+      }
 
-  function openModal() {
-    if (!modal) return;
+      function openModal() {
+        if (!modal) return;
 
-    if (modal.parentElement !== document.body) {
-      document.body.appendChild(modal);
-    }
+        if (modal.parentElement !== document.body) {
+          document.body.appendChild(modal);
+        }
 
-    lastFocus = document.activeElement;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    modal.style.display = 'flex';
-    lockScroll(true);
-    setTimeout(() => joinBtn?.focus(), 0);
-  }
+        lastFocus = document.activeElement;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.style.display = 'flex';
+        lockScroll(true);
+        setTimeout(() => joinBtn?.focus(), 0);
+      }
 
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    modal.style.display = 'none';
-    lockScroll(false);
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-  }
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.style.display = 'none';
+        lockScroll(false);
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
 
-  window.addEventListener('load', openModal, { once: true });
+      window.addEventListener('load', openModal, { once: true });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-  modal?.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      joinBtn?.focus();
-    }
-  });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+      modal?.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          joinBtn?.focus();
+        }
+      });
 
-  // ✅ SIEMPRE abre en nueva pestaña y cierra el modal en la principal
-  joinBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const a = document.createElement('a');
-    a.href = waLinkHref;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.referrerPolicy = 'no-referrer';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    closeModal();
-  });
-</script>
-
+      joinBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const a = document.createElement('a');
+        a.href = waLinkHref;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.referrerPolicy = 'no-referrer';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        closeModal();
+      });
+    </script>
+    -->
   </section>
   <Footer />
 </SiteLayout>

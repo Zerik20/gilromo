@@ -33,12 +33,12 @@
                bg-black md:bg-transparent dark:bg-black md:dark:bg-transparent
                shadow-lg md:shadow-none transition-all duration-300"
       >
-        <!-- Orden final y IDs que debes usar en tus secciones -->
-        <li><a href="#por-que"   class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">¿Por qué?</a></li>
-        <li><a href="#sobre-mi"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Sobre mí</a></li>
-        <li><a href="#ponentes"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Ponentes</a></li>
-        <li><a href="#programa"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Programa</a></li>
-        <li><a href="#contacto"  class="block py-2 px-3 text-white md:text-gold-200 md:hover:text-gold-100 md:p-0">Contacto</a></li>
+        <!-- Usa rutas root para funcionar desde cualquier página -->
+        <li><a href="/#por-que"   class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">¿Por qué?</a></li>
+        <li><a href="/#sobre-mi"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Sobre mí</a></li>
+        <li><a href="/#ponentes"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Ponentes</a></li>
+        <li><a href="/#programa"  class="block py-2 px-3 text-white hover:text-gold-300 md:p-0">Programa</a></li>
+        <li><a href="/#contacto"  class="block py-2 px-3 text-white md:text-gold-200 md:hover:text-gold-100 md:p-0">Contacto</a></li>
       </ul>
     </div>
   </div>
@@ -65,7 +65,7 @@
     applyScrollStyles();
     window.addEventListener("scroll", applyScrollStyles, { passive: true });
 
-    // Helpers menú móvil (null-safe)
+    // Helpers menú móvil
     const openMenu = () => {
       if (!menu || !toggleButton) return;
       menu.classList.remove("hidden");
@@ -85,13 +85,33 @@
       isOpen ? closeMenu() : openMenu();
     });
 
-    // Cerrar al hacer click en un enlace + resaltar activo
-    const links = menu ? Array.from(menu.querySelectorAll('a[href^="#"]')) : [];
+    // Enlaces a secciones (como Elements para evitar TS error con .href)
+    const links = menu ? Array.from(menu.querySelectorAll('a[href*="#"]')) : [];
     links.forEach((link) => {
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (e) => {
         if (window.innerWidth < 768) closeMenu();
-        links.forEach((l) => l.classList.remove("font-bold", "text-gold-300"));
-        link.classList.add("font-bold", "text-gold-300");
+
+        const hrefAttr = link.getAttribute("href") || "";
+        const hashIndex = hrefAttr.indexOf("#");
+        const targetId = hashIndex >= 0 ? hrefAttr.slice(hashIndex + 1) : "";
+
+        // Smooth scroll solo en la home
+        if (window.location.pathname === "/" && targetId) {
+          e.preventDefault();
+
+          links.forEach((l) => l.classList.remove("font-bold", "text-gold-300"));
+          link.classList.add("font-bold", "text-gold-300");
+
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", `/#${targetId}`);
+          } else {
+            // fallback si no existe el id
+            window.location.href = `/#${targetId}`;
+          }
+        }
+        // En otras páginas: navegación normal a /#seccion (no prevenimos)
       });
     });
   });
