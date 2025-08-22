@@ -1,4 +1,102 @@
 ---
+/* NUEVO — versión acomodada (sin video) */
+export interface Props {
+  eyebrow?: string
+  title?: string
+  lead?: string
+  points?: { emoji: string; title: string; body: string }[]
+  cta?: { text: string; href: string } | null
+}
+
+const {
+  eyebrow = '¿Por qué nosotros?',
+  title   = 'Relaciones reales. Resultados reales.',
+  lead    = 'En un solo día aprenderás a vender más, liderar con impacto, potenciar tu marca y crear conexiones que abren oportunidades reales.',
+  points  = [
+    { emoji: '🤝', title: 'Conexiones que sí suman', body: '¿Sientes que no generas las relaciones adecuadas en tu ciudad? Aquí conocerás gente que impulsa tu negocio.' },
+    { emoji: '🚀', title: 'Ventas & crecimiento',      body: 'Frameworks accionables para elevar tu ticket promedio y cerrar con seguridad.' },
+    { emoji: '🏷️', title: 'Marca personal con impacto', body: 'Aprende a posicionarte como referente' },
+    { emoji: '🎯', title: 'Liderazgo que mueve',        body: 'Herramientas simples para dirigir equipos que ejecutan y cumplen objetivos.' },
+  ],
+  cta = { text: 'Aparta tu lugar', href: '#boletos' },
+} = Astro.props;
+---
+
+<section id="por-que" class="relative section py-16 sm:py-24">
+  <!-- Fondo suave -->
+  <div
+    class="pointer-events-none absolute -z-10 inset-0"
+    style="background:
+      radial-gradient(80% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%),
+      radial-gradient(70% 60% at 50% 100%, rgba(220,38,38,0.18) 0%, transparent 65%);">
+  </div>
+
+  <div class="container-balanced">
+    <div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
+      <!-- Encabezado -->
+      <div class="text-center" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 text-xs uppercase tracking-wide">
+          <span>✨</span>
+          <span>{eyebrow}</span>
+        </div>
+
+        <h2 class="mt-3 font-['Playfair_Display'] font-extrabold tracking-tight leading-[0.95]
+                   text-[clamp(2rem,6vw,3.25rem)]
+                   text-transparent bg-clip-text
+                   bg-[linear-gradient(180deg,#fff_0%,#d4af37_100%)]"
+            data-aos="zoom-in" data-aos-delay="80">
+          {title}
+          <span class="block">Cumbre Sinergética</span>
+        </h2>
+
+        <p class="mt-4 max-w-2xl mx-auto text-white/90" data-aos="fade-up" data-aos-delay="140">
+          {lead}
+        </p>
+      </div>
+
+      <!-- Bullets -->
+      <ul class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5" data-aos="fade-up" data-aos-delay="200">
+        {points.map((p, idx) => (
+          <li class="w-full rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 hover:bg-white/[.07] transition"
+              data-aos="fade-up" data-aos-delay={220 + idx * 80}>
+            <div class="flex items-start gap-3">
+              <div class="text-2xl sm:text-3xl leading-none">{p.emoji}</div>
+              <div>
+                <h3 class="text-white font-semibold">{p.title}</h3>
+                <p class="text-white/80 text-sm mt-1">{p.body}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Iconitos + CTA -->
+      <div class="mt-6 flex items-center justify-center gap-3" data-aos="fade-up" data-aos-delay="520">
+        <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🤝</span>
+        <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">🌐</span>
+        <span class="text-3xl rounded-xl ring-1 ring-white/10 bg-white/5 px-3 py-2">📈</span>
+      </div>
+
+      {cta && (
+        <div class="mt-6 text-center" data-aos="zoom-in" data-aos-delay="600">
+          <a href={cta.href}
+             class="inline-flex items-center justify-center rounded-full
+                    bg-[linear-gradient(180deg,#e7c65a_0%,#d4af37_50%,#b9972c_100%)]
+                    text-black font-extrabold uppercase tracking-wide
+                    px-6 py-3 text-base ring-2 ring-gold-300 hover:scale-[1.02] active:scale-[0.98] transition">
+            {cta.text} <span class="ml-2">→</span>
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     ORIGINAL COMPLETO (COMENTADO) — Reactívalo cuando quieras
+     ========================================================= -->
+<!--
+---
 import VideoEmbed from './VideoEmbed.astro'
 
 export interface Props {
@@ -24,7 +122,6 @@ const {
 ---
 
 <section id="por-que" class="relative section py-16 sm:py-24">
-  <!-- fondo suave -->
   <div
     class="pointer-events-none absolute -z-10 inset-0"
     style="background:
@@ -34,23 +131,19 @@ const {
 
   <div class="container-balanced" data-aos="fade-up">
     <div class="grid grid-cols-1 lg:[grid-template-columns:1.25fr_0.85fr] gap-8 lg:gap-14 items-start">
-      <!-- Columna video -->
       <div class="relative order-1 lg:order-none w-full mx-auto lg:mx-0 lg:sticky lg:top-24"
            id="video-block"
            data-aos="zoom-in"
            data-aos-delay="100">
-        <!-- halo -->
         <div class="pointer-events-none absolute -inset-6 -z-10 blur-2xl"
              style="background: radial-gradient(60% 50% at 50% 50%, rgba(220,38,38,0.25) 0%, transparent 70%);">
         </div>
 
         <div class="group relative rounded-3xl ring-1 ring-white/15 bg-white/5 overflow-hidden">
-          <!-- borde dorado sutil -->
           <div class="absolute inset-0 pointer-events-none"
                style="mask: linear-gradient(black, transparent 70%); background:
                  radial-gradient(800px 200px at 50% -10%, rgba(212,175,55,.18), transparent)"></div>
 
-          <!-- Video -->
           <div class="aspect-[16/9] w-full">
             <VideoEmbed
               title="Por qué esta cumbre"
@@ -61,7 +154,6 @@ const {
             />
           </div>
 
-          <!-- Overlay UI: título y botones -->
           <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
 
           <div class="absolute inset-x-4 bottom-4 flex items-center justify-between">
@@ -87,7 +179,6 @@ const {
         </div>
       </div>
 
-      <!-- Columna texto (más compacta) -->
       <div class="w-full max-w-2xl mx-auto lg:mx-0 order-2 lg:order-none" data-aos="fade-up" data-aos-delay="200">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 text-xs uppercase tracking-wide mx-auto sm:mx-0"
              data-aos="fade-up" data-aos-delay="250">
@@ -143,7 +234,6 @@ const {
     </div>
   </div>
 
-  <!-- Overlay fullscreen -->
   <div id="video-overlay" class="fixed inset-0 z-[60] hidden">
     <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
     <div class="relative mx-auto w-full max-w-6xl p-4">
@@ -163,31 +253,26 @@ const {
   </div>
 
   <script>
-  // Helper tipado: nunca devuelve undefined
-  function getVideo(el: Element | null): HTMLVideoElement | null {
+  function getVideo(el) {
     if (!el) return null;
-    return el.querySelector<HTMLVideoElement>('video');
+    return el.querySelector('video');
   }
 
-  // Lookups tipados
-  const block = document.getElementById('video-block') as HTMLElement | null;
-  const muteBtn = document.getElementById('toggle-mute') as HTMLButtonElement | null;
-  const openBtn = document.getElementById('open-full') as HTMLButtonElement | null;
-  const overlay = document.getElementById('video-overlay') as HTMLElement | null;
-  const closeBtn = document.getElementById('close-full') as HTMLButtonElement | null;
+  const block = document.getElementById('video-block');
+  const muteBtn = document.getElementById('toggle-mute');
+  const openBtn = document.getElementById('open-full');
+  const overlay = document.getElementById('video-overlay');
+  const closeBtn = document.getElementById('close-full');
 
-  const video: HTMLVideoElement | null = getVideo(block);
+  const video = getVideo(block);
 
-  // Autoplay seguro (muted + playsinline recomendado dentro de VideoEmbed)
   if (video) {
     video.muted = true;
-    
     video.playsInline = true;
 
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          // Evita error si el navegador bloquea autoplay
           video.play().catch(() => {});
         } else {
           video.pause();
@@ -203,7 +288,6 @@ const {
     });
   }
 
-  // Overlay fullscreen
   openBtn?.addEventListener('click', () => {
     overlay?.classList.remove('hidden');
     const ovVideo = getVideo(overlay);
@@ -227,11 +311,12 @@ const {
 
   closeBtn?.addEventListener('click', closeOverlay);
 
-  overlay?.addEventListener('click', (e: MouseEvent) => {
+  overlay?.addEventListener('click', (e) => {
     const target = e.target;
-    if (overlay && target instanceof HTMLElement && target === overlay) {
+    if (overlay && target === overlay) {
       closeOverlay();
     }
   });
-</script>
+  </script>
 </section>
+-->
