@@ -19,39 +19,73 @@ const logos = [
     Aliados comerciales
   </h2>
 
-  <!-- Fijamos una altura a cada celda y forzamos a que la imagen se contenga dentro -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-6 justify-items-center">
-    {logos.map((logo, index) => (
-      <figure
-        class="w-full flex items-center justify-center h-[96px] sm:h-[120px] lg:h-[140px] overflow-hidden"
-        aria-label={logo.alt}
-        data-aos="zoom-in"
-        data-aos-delay={String(index * 120)}
-        data-aos-duration="700"
-        data-aos-once="true"
-        style="will-change: transform;"
-      >
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          loading="lazy"
-          decoding="async"
-          class="block h-full w-auto max-w-[80%] sm:max-w-[85%] object-contain"
-        />
-      </figure>
-    ))}
+  <!-- Carrusel infinito -->
+  <div class="relative w-full overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+    <div class="marquee">
+      <div class="marquee__track" style="--duration: 28s;">
+        {logos.map((logo) => (
+          <figure class="logo-cell" aria-label={logo.alt}>
+            <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+        {/* Duplicado para loop perfecto */}
+        {logos.map((logo) => (
+          <figure class="logo-cell" aria-label={logo.alt}>
+            <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
 
-<script type="module">
-  import AOS from 'aos';
-  if (typeof window !== 'undefined') {
-    const init = () =>
-      AOS.init({
-        once: true,
-        easing: 'ease-out-cubic'
-      });
-    if (document.readyState === 'complete') init();
-    else window.addEventListener('load', init, { once: true });
+<style>
+  /* Contenedor con desvanecido lateral sutil */
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
+
+  /* Pista: dos secuencias iguales → translateX(-50%) para loop perfecto */
+  .marquee__track {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(1.25rem, 5vw, 3rem);
+    /* Pausar en hover */
+    animation: marqueeScroll var(--duration, 28s) linear infinite;
+    will-change: transform;
+  }
+  .marquee__track:hover { animation-play-state: paused; }
+
+  /* Cada celda fija su alto; evita solapes en móvil y mantiene proporción */
+  .logo-cell {
+    flex: 0 0 auto;
+    height: clamp(70px, 16vw, 130px); /* un poco más grandes que antes */
+    width: clamp(140px, 28vw, 240px); /* ancho base para spacing uniforme */
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-cell img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
+  }
+
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Accesibilidad: respetar reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+  }
+</style>
+
+<script type="module">
+  // (Opcional) Si usas AOS global, no necesitas nada más aquí.
+  // Este carrusel no depende de JS; es 100% CSS y responsivo.
 </script>
