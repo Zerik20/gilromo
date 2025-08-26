@@ -47,11 +47,11 @@ const {
 
     <!-- Tarjeta única -->
     <div class="rounded-2xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-7 lg:p-8 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,.45)]" data-aos="fade-up" data-aos-delay="200">
-      <!-- Form mejor distribuido (grid de 6 columnas) -->
+      <!-- Form más simétrico: 12 columnas, 2 por fila en sm+ -->
       <form id="inscripcionForm" action={action || undefined} method={method}
-            class="grid grid-cols-1 sm:grid-cols-6 gap-4" data-aos="fade-up" data-aos-delay="220">
+            class="grid grid-cols-12 gap-4" data-aos="fade-up" data-aos-delay="220">
         <!-- Nombre -->
-        <div class="sm:col-span-6" data-aos="fade-up" data-aos-delay="240">
+        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="240">
           <label for="nombre" class="block text-sm font-medium text-white/90">Nombre</label>
           <input
             id="nombre" name="nombre" type="text" required autocapitalize="words" autocomplete="name"
@@ -61,7 +61,7 @@ const {
         </div>
 
         <!-- Correo -->
-        <div class="sm:col-span-3" data-aos="fade-up" data-aos-delay="260">
+        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="260">
           <label for="correo" class="block text-sm font-medium text-white/90">Correo</label>
           <input
             id="correo" name="correo" type="email" required autocomplete="email"
@@ -71,7 +71,7 @@ const {
         </div>
 
         <!-- Teléfono -->
-        <div class="sm:col-span-3" data-aos="fade-up" data-aos-delay="280">
+        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="280">
           <label for="telefono" class="block text-sm font-medium text-white/90">Teléfono</label>
           <input
             id="telefono" name="telefono" type="tel" inputmode="tel" pattern="[0-9+() -]{6,}" required autocomplete="tel"
@@ -80,21 +80,11 @@ const {
             placeholder="+52 447 670 14 34" />
         </div>
 
-        <!-- Profesión -->
-        <div class="sm:col-span-4" data-aos="fade-up" data-aos-delay="300">
-          <label for="profesion" class="block text-sm font-medium text-white/90">Profesión</label>
-          <input
-            id="profesion" name="profesion" type="text" required
-            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
-                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-            placeholder="Tu profesión" />
-        </div>
-
         <!-- Edad -->
-        <div class="sm:col-span-2" data-aos="fade-up" data-aos-delay="320">
+        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="300">
           <label for="edad" class="block text-sm font-medium text-white/90">Edad</label>
           <input
-            id="edad" name="edad" type="number" min="1" required
+            id="edad" name="edad" type="number" min="1" inputmode="numeric" required
             class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
                    focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
             placeholder="Tu edad" />
@@ -107,8 +97,11 @@ const {
         <!-- Hidden: Nombre del lead por defecto -->
         <input type="hidden" name="lead_name" value="Cumbre Mérida 15 Nov Gil Romo" />
 
+        <!-- Hidden: Empresa por defecto -->
+        <input type="hidden" name="empresa" value="Gil Romo Team" />
+
         <!-- CTA -->
-        <div class="sm:col-span-6 pt-2 flex justify-center items-center gap-4" data-aos="zoom-in" data-aos-delay="340">
+        <div class="col-span-12 pt-2 flex justify-center items-center gap-4" data-aos="zoom-in" data-aos-delay="340">
           <button id="submitBtn" type="submit"
             class="btn-gold px-5 py-2.5 text-base rounded-full ring-2 ring-gold-300
                    hover:scale-[1.02] active:scale-[.98] transition">
