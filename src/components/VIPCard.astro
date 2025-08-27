@@ -80,12 +80,16 @@ const {
         </ul>
       </div>
 
-      <!-- Precios -->
+      <!-- Precios (INVERTIDOS: Preventa muestra t.offer y OFERTA muestra t.presale) -->
       <div class="mt-4 text-center">
         <p class="text-white/70 line-through">{t.original}</p>
-        <p class="text-white/80">Preventa <span class="font-semibold">{t.presale}</span></p>
+
+        <!-- Preventa ahora muestra el precio de 'offer' -->
+        <p class="text-white/80">Preventa <span class="font-semibold">{t.offer}</span></p>
+
+        <!-- OFERTA ahora muestra el precio de 'presale' y sigue siendo el destacado -->
         <p class="mt-1 font-extrabold text-[clamp(1.15rem,2.2vw,1.35rem)] text-red-400">
-          OFERTA <span class="text-white">{t.offer}</span>
+          OFERTA <span class="text-white">{t.presale}</span>
         </p>
       </div>
 
