@@ -230,7 +230,7 @@ No redistribuir sin autorización.
 
 - Dirección: **Gil Romo Team**
 - Desarrollo & soporte: **Cumbre Sinergética Web**
-- Contacto: [WhatsApp](https://wa.me/524476701434) · [Email](mailto:gil.romo.vargas@gmail.com)
+- Contacto: [WhatsApp](https://wa.me/529992518592) · [Email](mailto:gil.romo.vargas@gmail.com)
 
 ---
 
