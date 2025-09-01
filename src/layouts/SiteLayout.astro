@@ -29,6 +29,20 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
+    <!-- Forzar visibles los elementos con data-aos (AOS desactivado) -->
+    <style is:inline>
+      [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        visibility: visible !important;
+      }
+      .aos-init, .aos-animate {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+
     <!-- Meta Pixel Code (Lead only) -->
     <script is:inline>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -56,6 +70,7 @@ const {
     <slot />
      <!-- Scripts -->
     <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script is:inline> AOS.init(); </script>
+    <!-- AOS inicializado pero deshabilitado globalmente -->
+    <script is:inline> AOS.init({ disable: true }); </script>
   </body>
 </html>

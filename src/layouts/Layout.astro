@@ -40,6 +40,20 @@ const imageUrl = '/meta-banner.jpg'
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
+    <!-- Desactivar AOS sin borrar atributos data-aos -->
+    <style is:inline>
+      [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        visibility: visible !important;
+      }
+      .aos-init, .aos-animate {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+
     <!-- Meta Pixel Code (PageView only) -->
     <script is:inline>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -69,7 +83,8 @@ const imageUrl = '/meta-banner.jpg'
 
     <!-- Scripts -->
     <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script is:inline> AOS.init(); </script>
+    <!-- AOS inicializado pero deshabilitado para toda la página -->
+    <script is:inline> AOS.init({ disable: true }); </script>
   </body>
 </html>
 
