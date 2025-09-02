@@ -9,8 +9,8 @@ interface Props {
 
 const {
   sectionId = 'contacto-form',
-  title = 'Contáctanos',
-  subtitle = '¿Tienes dudas, quieres cotizar o colaborar? Envíanos un mensaje y te respondemos pronto.',
+  title = 'Regístrate ahora',
+  subtitle = 'Para que no te quedes fuera de nuestro gran evento en Mérida, Yucatán.',
   action = 'https://script.google.com/macros/s/AKfycbzLTcsFDhzTV2sVlsKvPyC7490_VO3CcqrEvCcaVlfDadG0t0QXGDmlPayK0DaBCjiXqg/exec',
   method = 'POST',
 } = Astro.props;
@@ -27,12 +27,18 @@ const {
 
     <!-- Tarjeta del formulario -->
     <div class="rounded-2xl bg-black/50 ring-1 ring-white/10 p-5 sm:p-7 lg:p-8 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,.45)]" data-aos="fade-up" data-aos-delay="200">
-      <!-- Grid simétrico 12 cols -->
-      <form id="inscripcionForm" action={action || undefined} method={method}
-            class="grid grid-cols-12 gap-4" data-aos="fade-up" data-aos-delay="220">
+      <!-- Grid simétrico 12 cols, centrado -->
+      <form
+        id="inscripcionForm"
+        action={action || undefined}
+        method={method}
+        class="grid grid-cols-12 gap-4 place-items-center"
+        data-aos="fade-up"
+        data-aos-delay="220"
+      >
         <!-- Nombre -->
-        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="240">
-          <label for="nombre" class="block text-sm font-medium text-white/90">Nombre</label>
+        <div class="col-span-12 sm:col-span-6 w-full max-w-md" data-aos="fade-up" data-aos-delay="240">
+          <label for="nombre" class="block text-sm font-medium text-white/90 text-center">Nombre</label>
           <input
             id="nombre" name="nombre" type="text" required autocapitalize="words" autocomplete="name"
             class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
@@ -41,8 +47,8 @@ const {
         </div>
 
         <!-- Correo -->
-        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="260">
-          <label for="correo" class="block text-sm font-medium text-white/90">Correo</label>
+        <div class="col-span-12 sm:col-span-6 w-full max-w-md" data-aos="fade-up" data-aos-delay="260">
+          <label for="correo" class="block text-sm font-medium text-white/90 text-center">Correo</label>
           <input
             id="correo" name="correo" type="email" required autocomplete="email"
             class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
@@ -51,23 +57,13 @@ const {
         </div>
 
         <!-- Teléfono -->
-        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="280">
-          <label for="telefono" class="block text-sm font-medium text-white/90">Teléfono</label>
-          <input
+        <div class="col-span-12 sm:col-span-6 w-full max-w-md" data-aos="fade-up" data-aos-delay="280" >
+          <label for="telefono" class="block text-sm font-medium text-white/90 text-center">Teléfono</label>
+          <input 
             id="telefono" name="telefono" type="tel" inputmode="tel" pattern="[0-9+() -]{6,}" required autocomplete="tel"
             class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
                    focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
             placeholder="+52 999 251 8592" />
-        </div>
-
-        <!-- Edad -->
-        <div class="col-span-12 sm:col-span-6" data-aos="fade-up" data-aos-delay="300">
-          <label for="edad" class="block text-sm font-medium text-white/90">Edad</label>
-          <input
-            id="edad" name="edad" type="number" min="1" inputmode="numeric" required
-            class="mt-1 w-full rounded-xl bg-white/5 text-white placeholder-white/40 border border-white/10
-                   focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 px-3 py-2"
-            placeholder="Tu edad" />
         </div>
 
         <!-- Hidden: Estatus y metadatos -->
