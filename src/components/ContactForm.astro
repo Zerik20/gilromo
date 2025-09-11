@@ -88,36 +88,54 @@ const {
   </div>
 
   <!-- JS de envío (sin TS assertions) -->
-  <script type="module">
-    const formEl = document.getElementById('inscripcionForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const loader = document.getElementById('loader');
+<script type="module">
+  const formEl = document.getElementById('inscripcionForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const loader = document.getElementById('loader');
+  const telInput = document.getElementById('telefono');
 
-    if (formEl) {
-      formEl.addEventListener('submit', async (e) => {
-        if (!formEl.action) return; // sin action, submit nativo
-        e.preventDefault();
+  if (formEl) {
+    formEl.addEventListener('submit', async (e) => {
+      if (!formEl.action) return; // sin action, submit nativo
+      e.preventDefault();
 
-        if (loader) loader.classList.remove('hidden');
-        if (submitBtn) { submitBtn.setAttribute('disabled', 'true'); submitBtn.textContent = 'Enviando…'; }
-
-        try {
-          const formData = new FormData(formEl);
-          const resp = await fetch(formEl.action, { method: formEl.method || 'POST', body: formData });
-
-          if (resp.ok) {
-            if (typeof window !== 'undefined' && typeof window.fbq === 'function') { try { window.fbq('track', 'Lead'); } catch {} }
-            window.location.href = '/gracias';
-          } else {
-            alert('Ocurrió un error al enviar el formulario.');
-          }
-        } catch {
-          alert('No se pudo enviar. Intenta más tarde.');
-        } finally {
-          if (loader) loader.classList.add('hidden');
-          if (submitBtn) { submitBtn.removeAttribute('disabled'); submitBtn.textContent = 'Enviar'; }
+      // 👇 Normaliza el número: si no empieza con +52, se lo agrega
+      if (telInput) {
+        let val = telInput.value.trim();
+        if (val && !val.startsWith('52')) {
+          // quitar ceros o + innecesarios al inicio
+          val = val.replace(/^(\+|00)/, '');
+          telInput.value = `+52${val}`;
         }
-      });
-    }
-  </script>
-</section>
+      }
+
+      if (loader) loader.classList.remove('hidden');
+      if (submitBtn) {
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.textContent = 'Enviando…';
+      }
+
+      try {
+        const formData = new FormData(formEl);
+        const resp = await fetch(formEl.action, { method: formEl.method || 'POST', body: formData });
+
+        if (resp.ok) {
+          if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+            try { window.fbq('track', 'Lead'); } catch {}
+          }
+          window.location.href = '/gracias';
+        } else {
+          alert('Ocurrió un error al enviar el formulario.');
+        }
+      } catch {
+        alert('No se pudo enviar. Intenta más tarde.');
+      } finally {
+        if (loader) loader.classList.add('hidden');
+        if (submitBtn) {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.textContent = 'Enviar';
+        }
+      }
+    });
+  }
+</script>
