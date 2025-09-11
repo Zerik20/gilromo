@@ -22,39 +22,50 @@ const {
     { name:'ÁNGEL PINTO',    image:'/img/ponentes/Ponente5.png' },
     { name:'MIGUEL GÁMEZ',   image:'/img/ponentes/Ponente6.png' },
     { name:'OSWALDO BRAVO',  image:'/img/ponentes/Ponente7.png' },
+    { name:'GHALÍ MARTÍNEZ', image:'/img/ponentes/Ponente8.png' }, // 8º ponente
   ],
 } = Astro.props;
 
+// Mantener al keynote centrado
 const arr = [...speakers];
-const ki = arr.findIndex(s => s.keynote || s.name.toUpperCase() === (keynoteName||'').toUpperCase());
-if (ki > -1) { const k = arr.splice(ki,1)[0]; arr.splice(Math.floor(speakers.length/2),0,k) }
+const ki = arr.findIndex(
+  s => s.keynote || s.name.toUpperCase() === (keynoteName||'').toUpperCase()
+);
+if (ki > -1) {
+  const k = arr.splice(ki,1)[0];
+  arr.splice(4,0,k);  // en vez de 3, lo insertamos en el índice 4
+}
 const ordered   = arr;
-const centerIdx = Math.floor(ordered.length/2);
+const centerIdx = 4; // keynote ahora en 4
 
+
+
+// utilidades visuales (igual look que tenías, adaptado a 8)
 const H_SIDE   = 'h-[clamp(16rem,36svh,30rem)] md:h-[clamp(18rem,40svh,34rem)] xl:h-[clamp(20rem,44svh,38rem)]';
 const H_CENTER = 'h-[clamp(22rem,46svh,38rem)] md:h-[clamp(24rem,50svh,42rem)] xl:h-[clamp(26rem,54svh,46rem)]';
-const heights  = [H_SIDE,H_SIDE,H_SIDE,H_CENTER,H_SIDE,H_SIDE,H_SIDE];
-const zLayers  = ['z-[6]','z-[12]','z-[16]','z-[28]','z-[16]','z-[12]','z-[6]'];
-const yOffsets = [
-  'translate-y-2 md:translate-y-4 lg:translate-y-6',
-  'translate-y-6 md:translate-y-8 lg:translate-y-12',
-  'translate-y-9 md:translate-y-11 lg:translate-y-15',
-  'translate-y-13 md:translate-y-15 lg:translate-y-19',
-  'translate-y-9 md:translate-y-11 lg:translate-y-15',
-  'translate-y-6 md:translate-y-8 lg:translate-y-12',
-  'translate-y-2 md:translate-y-4 lg:translate-y-6',
-];
+
+function zAt(i:number){
+  const d = Math.abs(i-centerIdx);
+  return d===0 ? 'z-[28]' : d===1 ? 'z-[16]' : d===2 ? 'z-[12]' : d===3 ? 'z-[8]' : 'z-[6]';
+}
+function yAt(i:number){
+  const d = Math.abs(i-centerIdx);
+  // replica tu patrón: más alto en el centro, bajando hacia los lados
+  switch(d){
+    case 0: return 'translate-y-13 md:translate-y-15 lg:translate-y-19';
+    case 1: return 'translate-y-9 md:translate-y-11 lg:translate-y-15';
+    case 2: return 'translate-y-6 md:translate-y-8 lg:translate-y-12';
+    default:return 'translate-y-2 md:translate-y-4 lg:translate-y-6';
+  }
+}
+function hAt(i:number){ return i===centerIdx ? H_CENTER : H_SIDE }
 
 function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.pop()||''; return [p.join(' ').toUpperCase(), last.toUpperCase()] }
 ---
 
-<!-- Sección transparente; el fondo rojo viene del layout -->
 <section class="relative min-h-[88svh] bg-transparent overflow-x-clip overflow-y-visible pt-16 sm:pt-20">
-
-  <!-- Fondo SVG con degradado a transparente -->
   <div aria-hidden="true" class="absolute inset-0 z-0 hero-bg-svg"></div>
 
-  <!-- Contenido en z-10 para quedar encima del fondo -->
   <div class="relative z-10 mx-auto w-full max-w-[1320px] px-3 sm:px-6 lg:px-8">
     <header class="text-center max-w-4xl mx-auto" data-aos="fade-up">
       <h1 class="font-['Playfair_Display'] text-white font-semibold leading-[0.92] text-[clamp(2rem,5vw,4rem)]">
@@ -78,12 +89,12 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
               const isCenter = i === centerIdx;
               const captionLift = isCenter ? '-translate-y-9 sm:-translate-y-11' : '-translate-y-8 sm:-translate-y-10';
               return (
-                <figure class={`relative ${zLayers[i]||'z-[8]'} ${yOffsets[i]||''} ${i===0?'':'-ml-12 md:-ml-20 lg:-ml-28 xl:-ml-32'} group`}
+                <figure class={`relative ${zAt(i)} ${yAt(i)} ${i===0?'':'-ml-12 md:-ml-20 lg:-ml-28 xl:-ml-32'} group`}
                         data-aos={isCenter ? "zoom-in" : "fade-up"}
                         data-aos-delay={isCenter ? "300" : "400"}>
                   <img src={s.image} alt={`Foto de ${s.name}`}
                        class={`w-auto object-contain select-none drop-shadow-[0_28px_70px_rgba(0,0,0,.65)]
-                               ${heights[i]||H_SIDE} transition-transform duration-300 ease-out group-hover:-translate-y-1`}
+                               ${hAt(i)} transition-transform duration-300 ease-out group-hover:-translate-y-1`}
                        loading={i>1?'lazy':'eager'} decoding="async" />
                   <figcaption class={`mt-0 ${captionLift} text-center leading-[1.0]`}>
                     <div class={`font-extrabold uppercase tracking-wide
@@ -185,18 +196,15 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
 
     let idx = Number(track.dataset.start || 0) % N;
 
-    // píxeles seguros por notch/estatus-bar
     const SAFE_TOP = (() => {
       const v = getComputedStyle(document.documentElement).getPropertyValue('--safe-top').trim();
-      // v suele traer 'XXpx'; parseFloat lo convierte a número
       return v ? parseFloat(v) : 0;
     })();
 
-    // mide si la parte superior queda fuera y devuelve los px necesarios para bajarla
     function ensureTopVisible(el) {
       const rect = el.getBoundingClientRect();
       const container = track.getBoundingClientRect();
-      const margin = 12 + SAFE_TOP; // margen + área segura
+      const margin = 12 + SAFE_TOP;
       const diff = (container.top + margin) - rect.top;
       return diff > 0 ? diff : 0;
     }
@@ -212,15 +220,12 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
 
       el.style.top  = BASE_TOP + '%';
 
-      // Transform base para medir
       const pre = `translate(-50%, ${BASE_TY}%) ${offsetX}`;
       el.style.transform = `${pre} scale(${scale}) translateZ(0)`;
 
-      // Corrección anti-recorte superior
       const extra = ensureTopVisible(el);
       el.style.setProperty('--extraY', extra > 0 ? `${extra}px` : '0px');
 
-      // Transform final: translateY DESPUÉS del scale (para que el ajuste no se escale)
       el.style.transform = `${pre} translateY(var(--extraY)) scale(${scale}) translateZ(0)`;
 
       el.style.filter = `blur(${blur}px) brightness(${bright})`;
@@ -280,22 +285,19 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
 </script>
 
 <style>
-/* Área segura (iOS notch / barras) */
 :root { --safe-top: env(safe-area-inset-top, 0px); }
 .pt-safe { padding-top: var(--safe-top); }
 
-/* Fallback iOS viejo */
 @supports (padding-top: constant(safe-area-inset-top)) {
   :root { --safe-top: constant(safe-area-inset-top, 0px); }
 }
 
-/* Capa SVG con degradado a transparente */
 .hero-bg-svg{
   background-image: url('/img/FondoHero.svg');
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: .14; /* ajusta entre .08 y .20 */
+  opacity: .14;
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(0,0,0,.90) 0%,
@@ -318,7 +320,6 @@ function splitTwoLines(n:string){ const p=n.trim().split(/\s+/); const last=p.po
   -webkit-mask-size: 100% 100%;   mask-size: 100% 100%;
 }
 
-/* Fallback si no hay soporte de mask-image */
 @supports not (mask-image: linear-gradient(black, transparent)) {
   .hero-bg-svg{ clip-path: inset(0 0 35% 0); }
 }

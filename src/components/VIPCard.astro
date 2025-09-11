@@ -1,35 +1,29 @@
 ---
-// src/components/VIPAllInOne.astro
-// Muestra TODAS las tarjetas de boletos (General, Platino, VIP) en una sola cuadrícula.
-// Se comentó todo lo del "código de descuento" y se reemplazó por "Solicita tu código de descuento.".
-
 export interface Tier {
   name: string;
   bullets: string[];
-  original: string;
-  presale: string;
-  offer: string;
+  original: string; // precio anterior (tachado)
+  presale: string;  // ya no se usa, lo dejamos vacío por compatibilidad
+  offer: string;    // precio actual
   badge: string;
-  pillClass: string; // Debe incluir bg-* + text-*
+  pillClass: string;
 }
 
 export interface Props {
   tiers?: Tier[];
   gateway?: string;
-  // AOS opcional (se aplica a cada card)
-  aos?: string;       // "flip-left" | "fade-up" | "zoom-in"
-  aosDelay?: number;  // ms inicial; cada card suma +100ms
+  aos?: string;
+  aosDelay?: number;
 }
 
-// Defaults con los 3 tipos de boletos
 const {
   tiers = [
     {
       name: "ACCESO GENERAL",
       bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa"],
       original: "$2,100.00 Mxn.",
-      presale:  "$1,080.00 Mxn.",
-      offer:    "$1,350.00 Mxn.",
+      presale:  "", // sin preventa
+      offer:    "$1,050.00 Mxn.", // NUEVO
       badge: "HOT SALE",
       pillClass: "bg-[#d6c29a] text-black",
     },
@@ -37,8 +31,8 @@ const {
       name: "ACCESO PLATINO",
       bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa", "Lugares Preferentes"],
       original: "$2,850.00 Mxn.",
-      presale:  "$1,680.00 Mxn.",
-      offer:    "$2,100.00 Mxn.",
+      presale:  "", // sin preventa
+      offer:    "$1,425.00 Mxn.", // NUEVO
       badge: "HOT SALE",
       pillClass: "bg-zinc-300 text-black",
     },
@@ -46,8 +40,8 @@ const {
       name: "ACCESO VIP",
       bullets: ["Taller", "5 Conferencias", "Conferencia Sorpresa", "Lugares Preferentes", "Convivencia con Jorge Serratos", "Cena (Tres tiempos)"],
       original: "$4,750.00 Mxn.",
-      presale:  "$3,160.00 Mxn.",
-      offer:    "$3,950.00 Mxn.",
+      presale:  "", // sin preventa
+      offer:    "$3,200.00 Mxn.", // NUEVO
       badge: "VIP",
       pillClass: "bg-red-600/95 text-white",
     },
@@ -58,7 +52,6 @@ const {
 } = Astro.props;
 ---
 
-<!-- Wrapper en grid para acomodar las 3 cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   {tiers.map((t, idx) => (
     <article
@@ -68,7 +61,6 @@ const {
     >
       <h3 class="text-center text-white font-extrabold tracking-[.2em] text-sm">{t.name}</h3>
 
-      <!-- Píldora con bullets (color según tier.pillClass) -->
       <div class={`mt-4 rounded-2xl ${t.pillClass} px-5 py-4 shadow-inner`}>
         <ul class="text-sm space-y-2">
           {t.bullets.map((b) => (
@@ -80,38 +72,20 @@ const {
         </ul>
       </div>
 
-      <!-- Precios (INVERTIDOS: Preventa muestra t.offer y OFERTA muestra t.presale) -->
+      <!-- PRECIOS: solo original tachado + precio actual -->
       <div class="mt-4 text-center">
         <p class="text-white/70 line-through">{t.original}</p>
-
-        <!-- Preventa ahora muestra el precio de 'offer' -->
-        <p class="text-white/80">Preventa <span class="font-semibold">{t.offer}</span></p>
-
-        <!-- OFERTA ahora muestra el precio de 'presale' y sigue siendo el destacado -->
         <p class="mt-1 font-extrabold text-[clamp(1.15rem,2.2vw,1.35rem)] text-red-400">
-          OFERTA <span class="text-white">{t.presale}</span>
+          Precio <span class="text-white">{t.offer}</span>
         </p>
       </div>
 
-      <!-- Badge (solo la etiqueta; el bloque de cupón/copy se deja comentado) -->
       <div class="mt-3 flex items-center justify-center gap-2">
         <span class="inline-flex items-center rounded-full bg-red-600/90 text-white text-[10px] font-bold px-2 py-1">
           {t.badge}
         </span>
-
-        <!--
-        <span class="inline-flex items-center rounded-full bg-white/5 text-white/90 text-[10px] px-2 py-1 ring-1 ring-white/10">
-          Código: <strong class="ml-1 text-white select-all">CONEXION</strong>
-        </span>
-        <button
-          class="text-[10px] px-2 py-1 rounded-full border border-white/20 text-white/90 hover:bg-white/10"
-          type="button"
-          aria-label="Copiar cupón"
-        >Copiar</button>
-        -->
       </div>
 
-      <!-- CTA -->
       <div class="mt-5">
         <a
           href={gateway}
@@ -122,42 +96,8 @@ const {
         >
           Comprar boletos
         </a>
-
-        <!-- Antes: “Usa el código…”. Ahora se comenta y se reemplaza por el texto solicitado. -->
-        <!-- <p class="mt-2 text-center text-xs text-white/60">Usa el código <span class="text-white font-semibold">CONEXION</span> al pagar.</p> -->
         <p class="mt-2 text-center text-xs text-white/60">Solicita tu código de descuento.</p>
       </div>
     </article>
   ))}
 </div>
-
-<!-- Script de copiado de cupón (comentado para conservarlo)
-<script type="module">
-  // const btns = Array.from(document.querySelectorAll('[aria-label="Copiar cupón"]'));
-  // const codeEls = Array.from(document.querySelectorAll('[data-coupon]'));
-  // btns.forEach((btn, i) => {
-  //   btn.addEventListener('click', async () => {
-  //     const el = codeEls[i];
-  //     const value = (el?.textContent || '').trim();
-  //     try {
-  //       await navigator.clipboard.writeText(value);
-  //       const prev = btn.textContent;
-  //       btn.textContent = 'Copiado ✓';
-  //       setTimeout(() => { btn.textContent = prev || 'Copiar'; }, 1800);
-  //     } catch {
-  //       if (!el) return;
-  //       const r = document.createRange();
-  //       r.selectNodeContents(el);
-  //       const sel = window.getSelection();
-  //       sel?.removeAllRanges();
-  //       sel?.addRange(r);
-  //       if (document.execCommand) document.execCommand('copy');
-  //       sel?.removeAllRanges();
-  //       const prev = btn.textContent;
-  //       btn.textContent = 'Copiado ✓';
-  //       setTimeout(() => { btn.textContent = prev || 'Copiar'; }, 1800);
-  //     }
-  //   });
-  // });
-</script>
--->
